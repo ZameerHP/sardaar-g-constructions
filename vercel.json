@@ -4,5 +4,5 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm build:vercel",
   "outputDirectory": ".next",
-  "crons": [{ "path": "/api/cron/maintenance", "schedule": "*/5 * * * *" }]
+  "crons": [{ "path": "/api/cron/maintenance", "schedule": "0 0 * * *" }]
 }
