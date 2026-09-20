@@ -1,0 +1,1 @@
+export default function NotFound(){return <main className="inner-hero" style={{minHeight:'100vh'}}><p className="label">SARDAAR G CONSTRUCTION LTD.</p><h1>Page not found.</h1><p>This page may have moved or is not yet published.</p><a className="btn" style={{marginTop:30}} href="/">Return home</a></main>}
