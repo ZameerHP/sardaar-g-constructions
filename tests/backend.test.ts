@@ -250,3 +250,23 @@ test("PostgreSQL migration, RLS, atomic project saves, private storage, quote co
   assert.equal(await count("storage_deletions"), 1);
   await db.close();
 });
+
+
+test("JSON body limit cancels oversized chunked and multibyte requests", async () => {
+  let cancelled = false;
+  const stream = new ReadableStream<Uint8Array>({
+    pull(controller) { controller.enqueue(new Uint8Array(100000)); },
+    cancel() { cancelled = true; },
+  });
+  const req = new Request("https://example.com/api", {
+    method: "POST", body: stream, duplex: "half",
+  } as RequestInit & {duplex: "half"});
+  await assert.rejects(body(req), (e: unknown) => e instanceof HttpError && e.status === 413);
+  assert.equal(cancelled, true);
+  await assert.rejects(body(new Request("https://example.com/api", {
+    method: "POST", body: JSON.stringify({text: "é".repeat(100000)}),
+  })), (e: unknown) => e instanceof HttpError && e.status === 413);
+  assert.deepEqual(await body(new Request("https://example.com/api", {
+    method: "POST", body: JSON.stringify({text: "Exterior — façade"}),
+  })), {text: "Exterior — façade"});
+});

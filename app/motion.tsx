@@ -12,7 +12,7 @@ export function MotionDirector() {
       teardown();
       if (preference.matches) return;
       const animations: Animation[] = [];
-      const reveals = Array.from(document.querySelectorAll<HTMLElement>('.scroll-reveal, .photo-frame, .industry-grid article, .materials, .area-list a, .closing h2, .footer-wordmark, .service-row, .positioning a, .project-info, .inner-hero .label, .inner-hero p, .footer-grid > div'));
+      const reveals = Array.from(document.querySelectorAll<HTMLElement>('.scroll-reveal, .industry-grid article, .materials, .area-list a, .closing h2, .footer-wordmark, .service-row, .positioning a, .project-info, .inner-hero .label, .inner-hero p, .footer-grid > div'));
       const seen = new WeakSet<Element>();
       const revealObserver = new IntersectionObserver(entries => {
         for (const entry of entries) {

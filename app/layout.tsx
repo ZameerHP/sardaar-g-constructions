@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { siteOrigin } from "@/lib/supabase/config";
 import { getContent } from "@/lib/content";
 import "./globals.css";
+import "./public-premium.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin()),
   title: "Exterior Cladding & Siding Contractor BC | Sardaar G Construction",

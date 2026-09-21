@@ -25,8 +25,29 @@ export function sameOrigin(req: Request) {
 export async function body(req: Request) {
   if (Number(req.headers.get("content-length") || 0) > 180000)
     throw new HttpError(413, "Request is too large.");
-  const text = await req.text();
-  if (text.length > 180000) throw new HttpError(413, "Request is too large.");
+  // Enforce the byte limit while reading, including chunked requests that omit
+  // Content-Length. Do not buffer an unbounded attacker-controlled body first.
+  const reader = req.body?.getReader();
+  const decoder = new TextDecoder();
+  let text = "";
+  let received = 0;
+  if (reader) {
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        received += value.byteLength;
+        if (received > 180000) {
+          await reader.cancel().catch(() => {});
+          throw new HttpError(413, "Request is too large.");
+        }
+        text += decoder.decode(value, { stream: true });
+      }
+      text += decoder.decode();
+    } finally {
+      reader.releaseLock();
+    }
+  }
   try {
     return JSON.parse(text);
   } catch {
