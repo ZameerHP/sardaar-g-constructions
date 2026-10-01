@@ -6,55 +6,55 @@ export function LoginForm() {
   const [reset, setReset] = useState(0);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+
+  async function handleVerify(challengeToken: string) {
+    if (!challengeToken || busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      const r = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ turnstile: challengeToken }),
+      });
+      const d: any = await r.json();
+      if (!r.ok) throw new Error(d.error || "Verification failed.");
+      location.assign("/admin");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Unable to verify owner access.");
+      setToken("");
+      setReset((v) => v + 1);
+      setBusy(false);
+    }
+  }
+
   return (
     <form
-      onSubmit={async (e) => {
+      onSubmit={(e) => {
         e.preventDefault();
-        const f = new FormData(e.currentTarget);
-        setBusy(true);
-        setError("");
-        try {
-          const r = await fetch("/api/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: f.get("email"),
-              turnstile: token,
-            }),
-          });
-          const d: any = await r.json();
-          if (!r.ok) throw new Error(d.error || "Verification failed.");
-          location.assign("/admin");
-        } catch (e) {
-          setError(e instanceof Error ? e.message : "Unable to verify owner access.");
-          setToken("");
-          setReset((v) => v + 1);
-        } finally {
-          setBusy(false);
-        }
+        handleVerify(token);
       }}
     >
-      <label className="field">
-        Owner email
-        <input
-          name="email"
-          type="email"
-          autoComplete="email"
-          placeholder="e.g. info@sardaargconst.ca"
-          required
+      <div style={{ marginBlock: "24px 16px" }}>
+        <Turnstile
+          action="admin-login"
+          onToken={(t) => {
+            setToken(t);
+            handleVerify(t);
+          }}
+          resetKey={reset}
         />
-      </label>
-      <Turnstile action="admin-login" onToken={setToken} resetKey={reset} />
+      </div>
       {error && (
         <p role="alert" className="form-message error">
           {error}
         </p>
       )}
-      <button className="btn dark" disabled={busy || !token}>
-        {busy ? "Verifying…" : "Verify & Enter Dashboard"}
+      <button className="btn dark" type="submit" disabled={busy || !token}>
+        {busy ? "Verifying with Cloudflare…" : "Enter Owner Dashboard"}
       </button>
       <p className="form-note">
-        Protected by Cloudflare verification. No password required for authorized owners.
+        Protected by Cloudflare verification. No email or password required.
       </p>
     </form>
   );

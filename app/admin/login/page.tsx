@@ -18,7 +18,7 @@ export default function Page() {
         />
         <p className="label">Owner access</p>
         <h1>Owner verification.</h1>
-        <p>Access management functionality securely. No password required.</p>
+        <p>Access management functionality securely. No email or password required.</p>
         <LoginForm />
       </div>
     </main>

@@ -17,16 +17,19 @@ export async function POST(req: Request) {
     sameOrigin(req);
     const d = z
       .object({
-        email: z.string().email().max(254),
+        email: z.string().email().max(254).optional(),
         turnstile: z.string().min(1).max(2048),
       })
       .parse(await body(req));
 
     // Verify Cloudflare Turnstile server-side with TURNSTILE_SECRET_KEY
     await verifyChallenge(d.turnstile, "admin-login");
-    await limit(req, "login", d.email);
 
-    const emailNorm = d.email.toLowerCase().trim();
+    const defaultOwnerEmail =
+      process.env.ADMIN_NOTIFICATION_EMAIL?.toLowerCase().trim() ||
+      "info@sardaargconst.ca";
+    const emailNorm = (d.email || defaultOwnerEmail).toLowerCase().trim();
+    await limit(req, "login", emailNorm);
     const adminNotificationEmail = process.env.ADMIN_NOTIFICATION_EMAIL?.toLowerCase().trim();
 
     let isAuthorized =
