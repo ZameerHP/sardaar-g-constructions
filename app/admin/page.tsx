@@ -13,17 +13,18 @@ export default async function Page() {
     const { user } = await requireAdmin();
     email = user.email || "";
   } catch (e) {
-    if (e instanceof HttpError && (e.status === 401 || e.status === 503))
-      redirect("/admin/login");
-    return (
-      <main className="cms-login">
-        <h1>Access restricted.</h1>
-        <p>This account is not an approved administrator.</p>
-        <a className="text-link" href="/admin/login">
-          Use another account
-        </a>
-      </main>
-    );
+    if (e instanceof HttpError && e.status === 403) {
+      return (
+        <main className="cms-login">
+          <h1>Access restricted.</h1>
+          <p>This account is not an approved administrator.</p>
+          <a className="text-link" href="/admin/login">
+            Sign in with another account
+          </a>
+        </main>
+      );
+    }
+    redirect("/admin/login");
   }
   return <AdminPanel email={email} />;
 }

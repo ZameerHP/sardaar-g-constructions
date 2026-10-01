@@ -20,14 +20,7 @@ export default function Page() {
         <p className="label">Owner access</p>
         <h1>Welcome back.</h1>
         <p>Sign in to manage your projects, website content and enquiries.</p>
-        {supabaseConfig() ? (
-          <LoginForm />
-        ) : (
-          <div className="form-message">
-            Admin access is not configured yet. Follow the backend setup guide
-            to connect Supabase and approve the owner account.
-          </div>
-        )}
+        <LoginForm />
       </div>
     </main>
   );
