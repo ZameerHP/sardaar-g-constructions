@@ -16,6 +16,6 @@ export function CinematicHero(){
       <div className="cinema-statement"><div className="label gold">SARDAAR G CONSTRUCTION LTD.</div><h1>Exterior cladding<br/><span>solutions.</span></h1></div>
       <div className="cinema-enquiry"><p>Professional cladding & siding installation for multi-family, commercial and residential projects across British Columbia.</p><div className="cinema-actions"><a href="/request-a-quote" className="btn">Request a quote<ArrowUpRight aria-hidden="true"/></a><a href="/projects" className="cinema-projects">View our projects<ArrowUpRight aria-hidden="true"/></a></div></div>
     </div>
-    <div className="cinema-footer shell"><a href="#intro"><span className="scroll-track"><ArrowDown size={16}/></span><span>SCROLL TO DISCOVER</span></a><span>ARCHITECTURAL CONCEPT · NOT COMPLETED COMPANY WORK</span></div>
+    <div className="cinema-footer shell"><a href="#intro"><span className="scroll-track"><ArrowDown size={16}/></span><span>SCROLL TO DISCOVER</span></a></div>
   </section></div>
 }

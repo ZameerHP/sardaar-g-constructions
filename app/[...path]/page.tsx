@@ -64,6 +64,7 @@ export default async function Page({
     "projects",
     "industries",
     "our-process",
+    "warranty",
     "contact",
     "request-a-quote",
     "service-areas",

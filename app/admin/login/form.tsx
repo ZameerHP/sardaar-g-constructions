@@ -19,15 +19,14 @@ export function LoginForm() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               email: f.get("email"),
-              password: f.get("password"),
               turnstile: token,
             }),
           });
           const d: any = await r.json();
-          if (!r.ok) throw new Error(d.error);
+          if (!r.ok) throw new Error(d.error || "Verification failed.");
           location.assign("/admin");
         } catch (e) {
-          setError(e instanceof Error ? e.message : "Unable to sign in.");
+          setError(e instanceof Error ? e.message : "Unable to verify owner access.");
           setToken("");
           setReset((v) => v + 1);
         } finally {
@@ -36,15 +35,12 @@ export function LoginForm() {
       }}
     >
       <label className="field">
-        Email
-        <input name="email" type="email" autoComplete="username" required />
-      </label>
-      <label className="field">
-        Password
+        Owner email
         <input
-          name="password"
-          type="password"
-          autoComplete="current-password"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="e.g. info@sardaargconst.ca"
           required
         />
       </label>
@@ -55,11 +51,10 @@ export function LoginForm() {
         </p>
       )}
       <button className="btn dark" disabled={busy || !token}>
-        {busy ? "Signing in…" : "Sign in"}
+        {busy ? "Verifying…" : "Verify & Enter Dashboard"}
       </button>
       <p className="form-note">
-        Access is by invitation. Contact the website administrator if you need
-        your account approved or password reset.
+        Protected by Cloudflare verification. No password required for authorized owners.
       </p>
     </form>
   );
