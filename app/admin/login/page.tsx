@@ -1,6 +1,7 @@
+import { supabaseConfig } from "@/lib/supabase/config";
 import { LoginForm } from "./form";
 export const metadata = {
-  title: "Owner access | Sardaar G",
+  title: "Admin sign in | Sardaar G",
   robots: { index: false, follow: false },
 };
 export default function Page() {
@@ -17,9 +18,16 @@ export default function Page() {
           alt="Sardaar G Construction Ltd."
         />
         <p className="label">Owner access</p>
-        <h1>Owner verification.</h1>
-        <p>Access management functionality securely. No email or password required.</p>
-        <LoginForm />
+        <h1>Welcome back.</h1>
+        <p>Sign in to manage your projects, website content and enquiries.</p>
+        {supabaseConfig() ? (
+          <LoginForm />
+        ) : (
+          <div className="form-message">
+            Admin access is not configured yet. Follow the backend setup guide
+            to connect Supabase and approve the owner account.
+          </div>
+        )}
       </div>
     </main>
   );

@@ -6,55 +6,59 @@ export function LoginForm() {
   const [reset, setReset] = useState(0);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-
-  async function handleVerify(challengeToken: string) {
-    if (!challengeToken || busy) return;
-    setBusy(true);
-    setError("");
-    try {
-      const r = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ turnstile: challengeToken }),
-      });
-      const d: any = await r.json();
-      if (!r.ok) throw new Error(d.error || "Verification failed.");
-      location.assign("/admin");
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Unable to verify owner access.");
-      setToken("");
-      setReset((v) => v + 1);
-      setBusy(false);
-    }
-  }
-
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        handleVerify(token);
+        const f = new FormData(e.currentTarget);
+        setBusy(true);
+        setError("");
+        try {
+          const r = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: f.get("email"),
+              password: f.get("password"),
+              turnstile: token,
+            }),
+          });
+          const d: any = await r.json();
+          if (!r.ok) throw new Error(d.error || "Unable to sign in.");
+          location.assign("/admin");
+        } catch (e) {
+          setError(e instanceof Error ? e.message : "Unable to sign in.");
+          setToken("");
+          setReset((v) => v + 1);
+        } finally {
+          setBusy(false);
+        }
       }}
     >
-      <div style={{ marginBlock: "24px 16px" }}>
-        <Turnstile
-          action="admin-login"
-          onToken={(t) => {
-            setToken(t);
-            handleVerify(t);
-          }}
-          resetKey={reset}
+      <label className="field">
+        Email
+        <input name="email" type="email" autoComplete="username" required />
+      </label>
+      <label className="field">
+        Password
+        <input
+          name="password"
+          type="password"
+          autoComplete="current-password"
+          required
         />
-      </div>
+      </label>
+      <Turnstile action="admin-login" onToken={setToken} resetKey={reset} />
       {error && (
         <p role="alert" className="form-message error">
           {error}
         </p>
       )}
-      <button className="btn dark" type="submit" disabled={busy || !token}>
-        {busy ? "Verifying with Cloudflare…" : "Enter Owner Dashboard"}
+      <button className="btn dark" disabled={busy || !token}>
+        {busy ? "Signing in…" : "Sign in"}
       </button>
       <p className="form-note">
-        Protected by Cloudflare verification. No email or password required.
+        Sign in with your approved Supabase owner email and password.
       </p>
     </form>
   );
