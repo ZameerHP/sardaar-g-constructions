@@ -799,7 +799,7 @@
     position: relative !important;
     top: 0 !important;
     height: calc(100svh - 64px) !important;
-    min-height: 580px !important;
+    min-height: min(580px, calc(100svh - 64px)) !important;
     max-height: 780px !important;
     display: flex !important;
     flex-direction: column !important;
@@ -821,14 +821,15 @@
   }
   .cinema-brand-depth {
     top: 28px !important;
-    left: 0 !important;
-    right: 0 !important;
+    left: 14px !important;
+    right: 14px !important;
     opacity: 0.92 !important;
     z-index: 1 !important;
   }
   .cinema-wordmark {
-    font-size: 16.5vw !important;
-    letter-spacing: 0.08em !important;
+    width: 100% !important;
+    font-size: clamp(28px, 10vw, 52px) !important;
+    letter-spacing: 0.025em !important;
     color: #ffffff !important;
     font-weight: 900 !important;
     text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8), 0 0 45px rgba(255, 255, 255, 0.25) !important;
@@ -1098,6 +1099,13 @@
   }
   .cinema-footer > span {
     display: none !important;
+  }
+}
+
+@media (max-width: 359px) {
+  .cinema-actions {
+    grid-template-columns: 1fr !important;
+    max-width: 300px !important;
   }
 }
 
