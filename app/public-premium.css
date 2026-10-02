@@ -747,86 +747,258 @@
 }
 
 @media(max-width: 640px) {
-  .brand-logo-wrap { width: 40px; height: 40px; border-radius: 10px; }
-  .brand-logo-wrap img { width: 26px; height: 26px; }
-  .brand-name { font-size: 16px; letter-spacing: 0.09em; }
-  .brand-tagline { font-size: 8.5px; letter-spacing: 0.18em; }
-  
-  .cinema-hero {
-    height: auto;
-    min-height: calc(100svh - 68px);
-    padding-bottom: 30px;
+  .brand-logo-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
   }
-  .cinema-content {
-    position: relative;
-    bottom: auto;
-    padding-top: 90px;
-    padding-bottom: 40px;
-    gap: 22px;
+  .brand-logo-wrap img {
+    width: 24px;
+    height: 24px;
+  }
+  .brand-name {
+    font-size: 15.5px;
+    letter-spacing: 0.1em;
+  }
+  .brand-tagline {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+  }
+  
+  /* Hero Stage & Viewport */
+  .hero-scroll-stage {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .cinema-hero {
+    position: relative !important;
+    top: 0 !important;
+    height: auto !important;
+    min-height: 100svh !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    padding-top: 86px !important;
+    padding-bottom: 24px !important;
+    overflow: hidden !important;
+    background: #0d1213 !important;
+  }
+  
+  /* Background visual scene - pristine depth without clutter */
+  .cinema-scene {
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+  }
+  .cinema-sky {
+    background: radial-gradient(circle at 50% 25%, #182e28 0%, #0d1213 85%) !important;
   }
   .cinema-brand-depth {
-    top: 60px;
+    top: 95px !important;
+    left: 0 !important;
+    right: 0 !important;
+    opacity: 0.45 !important;
   }
   .cinema-wordmark {
-    font-size: 17vw !important;
-    letter-spacing: 0.04em;
+    font-size: 17.5vw !important;
+    letter-spacing: 0.06em !important;
+    color: rgba(255, 255, 255, 0.08) !important;
+    font-weight: 900 !important;
+    text-shadow: none !important;
   }
-  .cinema-statement h1 {
-    font-size: clamp(36px, 10vw, 44px) !important;
-    line-height: 1.05;
-    letter-spacing: -0.04em;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+  .cinema-building-depth {
+    inset: 0 !important;
+    transform: none !important;
+    opacity: 0.72 !important;
   }
+  .cinema-building-enter img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 38% !important;
+  }
+  
+  /* Smooth seamless vignette overlay for maximum readability */
+  .cinema-shade {
+    background: linear-gradient(
+      180deg,
+      rgba(13, 18, 19, 0.4) 0%,
+      rgba(13, 18, 19, 0.2) 25%,
+      rgba(13, 18, 19, 0.75) 55%,
+      rgba(13, 18, 19, 0.96) 80%,
+      #0d1213 100%
+    ) !important;
+    inset: 0 !important;
+    position: absolute !important;
+  }
+  
+  .cinema-meta {
+    display: none !important;
+  }
+  
+  /* Content container positioned cleanly */
+  .cinema-content {
+    position: relative !important;
+    bottom: auto !important;
+    padding-inline: 20px !important;
+    padding-top: 100px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    z-index: 5 !important;
+  }
+  
+  /* Eyebrow & Badges */
   .hero-pill-badge {
-    font-size: 8.5px;
-    padding: 5px 11px;
-    letter-spacing: 0.12em;
+    font-size: 8px !important;
+    padding: 5px 12px !important;
+    letter-spacing: 0.14em !important;
+    gap: 6px !important;
+    margin-bottom: 10px !important;
+    background: rgba(17, 24, 23, 0.75) !important;
+    border: 1px solid rgba(201, 170, 109, 0.4) !important;
   }
+  .cinema-statement .label {
+    font-size: 10px !important;
+    letter-spacing: 0.2em !important;
+    color: #c9aa6d !important;
+    margin-bottom: 8px !important;
+    font-weight: 700 !important;
+  }
+  
+  /* Typography */
+  .cinema-statement h1 {
+    font-size: clamp(34px, 9.5vw, 44px) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.04em !important;
+    color: #ffffff !important;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8) !important;
+  }
+  .cinema-statement h1 span {
+    color: #c9aa6d !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+  }
+  
   .cinema-enquiry p {
-    font-size: 14.5px !important;
-    line-height: 1.65;
-    color: #e5ece6;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: #d1dbd4 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7) !important;
   }
+  
+  /* Actions: Luxury Primary + Outline Button */
   .cinema-actions {
-    margin-top: 20px;
-    gap: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    margin-top: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
   }
   .cinema-actions .btn {
-    width: 100%;
-    justify-content: center;
-    padding: 16px 22px;
-    font-size: 13.5px;
-    font-weight: 600;
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 15px 20px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    border-radius: 999px !important;
+    background: #c9aa6d !important;
+    color: #111315 !important;
+    border: 1px solid #c9aa6d !important;
+    box-shadow: 0 8px 24px rgba(201, 170, 109, 0.28) !important;
+  }
+  .cinema-actions .btn svg {
+    width: 18px !important;
+    height: 18px !important;
   }
   .cinema-projects {
-    justify-content: center;
-    padding: 12px;
-    font-size: 13px;
-    color: #c9aa6d !important;
-    border: 1px solid rgba(201, 170, 109, 0.3);
-    border-radius: 999px;
-    background: rgba(17, 19, 21, 0.5);
-    backdrop-filter: blur(8px);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 13px 18px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #f0f4ed !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(12px) !important;
+    text-decoration: none !important;
+    transition: background 0.2s, border-color 0.2s !important;
   }
+  .cinema-projects svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  /* Feature highlights: Compact, aligned luxury metrics */
   .hero-feature-highlights {
-    gap: 12px;
-    margin-top: 22px;
-    padding-top: 16px;
-    justify-content: space-between;
-  }
-  .hero-highlight-item strong {
-    font-size: 12px;
-  }
-  .hero-highlight-item span {
-    font-size: 10px;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    margin-top: 22px !important;
+    padding: 14px 12px !important;
+    background: rgba(17, 24, 23, 0.6) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    text-align: center !important;
   }
   .hero-highlight-divider {
-    height: 18px;
+    display: none !important;
+  }
+  .hero-highlight-item strong {
+    font-size: 11.5px !important;
+    color: #fff !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .hero-highlight-item span {
+    font-size: 9px !important;
+    color: #c9aa6d !important;
+    letter-spacing: 0.08em !important;
+    margin-top: 3px !important;
+    white-space: nowrap !important;
+  }
+  
+  /* Footer scroll cue */
+  .cinema-footer {
+    position: relative !important;
+    height: auto !important;
+    margin-top: 14px !important;
+    padding-bottom: 6px !important;
+    justify-content: center !important;
+    z-index: 5 !important;
+  }
+  .cinema-footer a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 9px !important;
+    letter-spacing: 0.16em !important;
+    color: #a2aba5 !important;
+  }
+  .cinema-footer .scroll-track {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .cinema-footer svg {
+    width: 12px !important;
+    height: 12px !important;
   }
 }
+
 
 
