@@ -1495,3 +1495,45 @@
     font-size: clamp(31px, 9vw, 36px) !important;
   }
 }
+
+
+/* Hero composition pass: bring the SARDAAR G wordmark closer to the headline. */
+@media (min-width: 769px) {
+  .public-site .cinema-brand-depth {
+    top: clamp(105px, 13vh, 170px) !important;
+  }
+  .public-site .cinema-wordmark {
+    font-size: clamp(64px, 10.8vw, 164px) !important;
+    letter-spacing: -.095em !important;
+    line-height: .72 !important;
+  }
+  .public-site .cinema-statement {
+    max-width: 760px;
+  }
+  .public-site .cinema-statement .label {
+    letter-spacing: .24em;
+  }
+}
+@media (max-width: 768px) {
+  .public-site .cinema-brand-depth {
+    top: clamp(118px, 21vh, 165px) !important;
+    gap: 5px !important;
+  }
+  .public-site .cinema-brand-depth .cinema-wordmark {
+    font-size: clamp(34px, 9.4vw, 50px) !important;
+    letter-spacing: -.095em !important;
+    line-height: .72 !important;
+  }
+  .public-site .cinema-brand-depth::after {
+    margin-top: 2px !important;
+    width: 28px !important;
+  }
+}
+@media (max-width: 390px) {
+  .public-site .cinema-brand-depth {
+    top: clamp(110px, 19vh, 145px) !important;
+  }
+  .public-site .cinema-brand-depth .cinema-wordmark {
+    font-size: clamp(30px, 8.7vw, 34px) !important;
+  }
+}
