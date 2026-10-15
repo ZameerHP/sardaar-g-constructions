@@ -1265,3 +1265,56 @@
     font-size: clamp(39px, 10.5vw, 48px) !important;
   }
 }
+
+/* Custom mobile-only SARDAAR G hero wordmark treatment. */
+.cinema-mobile-kicker { display: none; }
+@media (max-width: 768px) {
+  .public-site .cinema-brand-depth {
+    top: 24px !important;
+    left: 12px !important;
+    right: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 9px !important;
+  }
+  .public-site .cinema-mobile-kicker {
+    display: block;
+    color: #d8bd83;
+    font-size: 8px;
+    font-weight: 650;
+    letter-spacing: .34em;
+    line-height: 1;
+    text-align: center;
+    padding-left: .34em;
+    text-transform: uppercase;
+  }
+  .public-site .cinema-brand-depth .cinema-wordmark {
+    width: 100% !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: clamp(35px, 10vw, 56px) !important;
+    font-weight: 850 !important;
+    letter-spacing: -.085em !important;
+    line-height: .95 !important;
+    text-align: center !important;
+    white-space: nowrap;
+    color: #f7f4ed !important;
+    text-shadow: 0 5px 24px rgba(0,0,0,.45) !important;
+  }
+  .public-site .cinema-brand-depth .cinema-wordmark span:nth-child(8),
+  .public-site .cinema-brand-depth .cinema-wordmark span:nth-child(9) {
+    color: #d8bd83 !important;
+  }
+  .public-site .cinema-brand-depth::after {
+    content: "";
+    display: block;
+    width: 42px;
+    height: 1px;
+    margin-top: 1px;
+    background: linear-gradient(90deg, transparent, #d8bd83, transparent);
+  }
+}
+@media (max-width: 390px) {
+  .public-site .cinema-mobile-kicker { font-size: 7px; letter-spacing: .28em; }
+  .public-site .cinema-brand-depth .cinema-wordmark { font-size: clamp(31px, 9.2vw, 36px) !important; }
+}
