@@ -1573,3 +1573,9 @@
 .public-site .hero-highlight-item strong{font-size:8px!important}
 .public-site .hero-highlight-item span{font-size:6.5px!important;letter-spacing:.045em!important}
 }
+
+@media(max-width:768px){
+.public-site .hero-highlight-item::before{content:"✓"!important;width:auto!important;height:auto!important;margin-bottom:2px!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;color:#d8bd83!important;font-size:12px!important;font-weight:500!important;line-height:1!important}
+.public-site .hero-highlight-item:nth-child(3)::before{content:"▦"!important;font-size:11px!important}
+.public-site .hero-highlight-item:nth-child(5)::before{content:"◆"!important;font-size:10px!important}
+}
