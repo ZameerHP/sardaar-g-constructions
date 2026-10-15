@@ -1537,3 +1537,39 @@
     font-size: clamp(30px, 8.7vw, 34px) !important;
   }
 }
+
+/* Premium image-led mobile hero */
+@media(max-width:768px){
+.public-site .cinema-brand-depth{display:none!important}
+.public-site .cinema-hero{min-height:650px!important;height:min(820px,calc(100svh - 64px))!important;max-height:820px!important;padding:0 0 18px!important;background:#0b1110!important;isolation:isolate!important}
+.public-site .cinema-building-depth{opacity:.88!important}
+.public-site .cinema-building-enter img{object-position:center 36%!important;filter:saturate(.82) contrast(1.04)!important}
+.public-site .cinema-shade{background:linear-gradient(180deg,rgba(7,12,11,.68) 0%,rgba(7,12,11,.18) 22%,rgba(7,12,11,.18) 42%,rgba(7,12,11,.76) 66%,rgba(7,12,11,.96) 100%)!important;inset:0!important;z-index:1!important}
+.public-site .cinema-content{width:100%!important;max-width:620px!important;margin:0 auto!important;padding:0 23px!important;gap:17px!important;z-index:4!important}
+.public-site .cinema-statement{gap:12px!important;width:100%!important}
+.public-site .cinema-statement .hero-pill-badge{align-self:center!important;margin:0 auto 2px!important;padding:6px 10px!important;border-color:rgba(218,190,133,.28)!important;background:rgba(9,16,14,.48)!important;color:#e0c894!important;font-size:7px!important;letter-spacing:.14em!important;backdrop-filter:blur(12px)!important}
+.public-site .cinema-statement .label{font-size:8px!important;line-height:1.4!important;letter-spacing:.24em!important;color:#d8bd83!important}
+.public-site .cinema-statement h1{max-width:540px!important;margin:0!important;font-family:Arial,Helvetica,sans-serif!important;font-size:clamp(42px,10.4vw,62px)!important;font-weight:520!important;letter-spacing:-.072em!important;line-height:.98!important;text-align:center!important;text-wrap:balance!important;color:#f7f6f1!important;text-shadow:none!important}
+.public-site .cinema-statement h1 span{color:#d7bb80!important;font-family:Georgia,'Times New Roman',serif!important;font-weight:400!important;font-style:italic!important;letter-spacing:-.065em!important}
+.public-site .cinema-enquiry p{max-width:470px!important;margin:0 auto 17px!important;color:rgba(242,242,235,.78)!important;font-size:12px!important;line-height:1.8!important;letter-spacing:.008em!important;text-align:center!important;text-shadow:none!important}
+.public-site .cinema-actions{width:100%!important;display:grid!important;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)!important;gap:9px!important;align-items:stretch!important;margin:0!important}
+.public-site .cinema-actions .btn{min-height:48px!important;padding:0 12px!important;display:inline-flex!important;justify-content:center!important;align-items:center!important;gap:8px!important;border:1px solid rgba(246,222,168,.68)!important;border-radius:4px!important;background:linear-gradient(135deg,#dfc58d,#c6a568 54%,#b58d4d)!important;color:#151713!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 7px 22px rgba(0,0,0,.2)!important;font-size:9px!important;font-weight:750!important;letter-spacing:.1em!important;text-transform:uppercase!important;text-decoration:none!important;white-space:nowrap!important}
+.public-site .cinema-actions .cinema-projects{min-height:48px!important;padding:0 9px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;border:1px solid rgba(255,255,255,.27)!important;border-radius:4px!important;background:rgba(240,242,235,.075)!important;color:rgba(250,249,243,.94)!important;backdrop-filter:blur(16px) saturate(125%)!important;-webkit-backdrop-filter:blur(16px) saturate(125%)!important;font-size:9px!important;font-weight:600!important;text-decoration:none!important;white-space:nowrap!important}
+.public-site .hero-feature-highlights{width:100%!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:stretch!important;gap:0!important;margin:19px 0 0!important;padding:15px 0 3px!important;border-top:1px solid rgba(225,202,155,.25)!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.public-site .hero-highlight-item{min-width:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:5px!important;padding:0 6px!important;text-align:center!important}
+.public-site .hero-highlight-item::before{content:""!important;display:block!important;width:4px!important;height:4px!important;margin-bottom:2px!important;border-radius:50%!important;background:#d8bd83!important;box-shadow:0 0 8px rgba(216,189,131,.28)!important}
+.public-site .hero-highlight-item strong{color:#f7f5ee!important;font-size:9px!important;line-height:1.35!important;font-weight:650!important;letter-spacing:-.01em!important;white-space:normal!important}
+.public-site .hero-highlight-item span{color:#d8bd83!important;font-size:7px!important;line-height:1.5!important;font-weight:550!important;letter-spacing:.07em!important;text-transform:uppercase!important;white-space:normal!important}
+.public-site .hero-highlight-divider{width:1px!important;height:auto!important;min-height:28px!important;align-self:center!important;background:rgba(255,255,255,.12)!important}
+.public-site .cinema-footer{display:none!important}
+}
+@media(max-width:390px){
+.public-site .cinema-content{padding-inline:17px!important;gap:14px!important}
+.public-site .cinema-statement h1{font-size:clamp(39px,10.2vw,45px)!important}
+.public-site .cinema-enquiry p{font-size:11px!important;line-height:1.72!important}
+.public-site .cinema-actions{gap:7px!important}
+.public-site .cinema-actions .btn,.public-site .cinema-actions .cinema-projects{font-size:8px!important;padding-inline:8px!important}
+.public-site .hero-highlight-item{padding-inline:3px!important}
+.public-site .hero-highlight-item strong{font-size:8px!important}
+.public-site .hero-highlight-item span{font-size:6.5px!important;letter-spacing:.045em!important}
+}
