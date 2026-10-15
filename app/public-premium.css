@@ -1180,8 +1180,9 @@
   .public-site .brand-logo-wrap { width: 46px; height: 46px; border-radius: 4px; }
   .public-site .brand-logo-wrap img { width: 38px; height: 38px; }
   .public-site .cinema-wordmark {
-    font-size: clamp(38px, 11vw, 66px);
-    letter-spacing: -.065em;
+    font-size: clamp(38px, 11vw, 66px) !important;
+    letter-spacing: -.065em !important;
+    line-height: .86 !important;
   }
   .public-site .cinema-statement h1 {
     font-size: clamp(42px, 10.5vw, 66px);
