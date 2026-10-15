@@ -1579,3 +1579,191 @@
 .public-site .hero-highlight-item:nth-child(3)::before{content:"▦"!important;font-size:11px!important}
 .public-site .hero-highlight-item:nth-child(5)::before{content:"◆"!important;font-size:10px!important}
 }
+
+
+/* FIX: restore a full-bleed, vertically centered mobile hero. */
+@media (max-width: 768px) {
+  .public-site .header.header-home {
+    position: absolute !important;
+    inset: 0 0 auto 0 !important;
+    width: 100% !important;
+    height: 76px !important;
+    min-height: 76px !important;
+    background: rgba(9, 22, 18, .28) !important;
+    border-bottom: 1px solid rgba(255,255,255,.12) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(125%) !important;
+    backdrop-filter: blur(10px) saturate(125%) !important;
+    box-shadow: none !important;
+    z-index: 50 !important;
+  }
+  .public-site .header.header-home.is-scrolled {
+    background: rgba(9, 22, 18, .68) !important;
+  }
+  .public-site .hero-scroll-stage {
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .public-site .cinema-hero {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100vh !important;
+    height: 100svh !important;
+    min-height: 620px !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 88px 0 24px !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    background: #0b1713 !important;
+  }
+  .public-site .cinema-scene {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    background: #0b1713 !important;
+  }
+  .public-site .cinema-sky {
+    position: absolute !important;
+    inset: 0 !important;
+    background: #0b1713 !important;
+  }
+  .public-site .cinema-building-depth {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 1 !important;
+    transform: none !important;
+    z-index: 0 !important;
+  }
+  .public-site .cinema-building-enter {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .public-site .cinema-building-enter img {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    opacity: 1 !important;
+    filter: saturate(.88) contrast(1.04) !important;
+  }
+  .public-site .cinema-shade {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1 !important;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 30, 20, .78) 0%,
+      rgba(10, 30, 20, .60) 42%,
+      rgba(10, 30, 20, .70) 72%,
+      rgba(7, 18, 13, .88) 100%
+    ) !important;
+  }
+  .public-site .cinema-meta,
+  .public-site .cinema-brand-depth,
+  .public-site .cinema-footer {
+    display: none !important;
+  }
+  .public-site .cinema-content {
+    position: relative !important;
+    inset: auto !important;
+    bottom: auto !important;
+    z-index: 3 !important;
+    display: flex !important;
+    flex: 0 0 auto !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 660px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: 0 22px !important;
+    gap: 20px !important;
+    text-align: center !important;
+    transform: none !important;
+  }
+  .public-site .cinema-statement {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 10px !important;
+    transform: none !important;
+  }
+  .public-site .cinema-statement .hero-pill-badge {
+    margin: 0 auto 4px !important;
+  }
+  .public-site .cinema-statement .label {
+    margin: 0 !important;
+  }
+  .public-site .cinema-statement h1 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: clamp(40px, 9.7vw, 58px) !important;
+    line-height: .99 !important;
+    letter-spacing: -.065em !important;
+  }
+  .public-site .cinema-enquiry {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    transform: none !important;
+  }
+  .public-site .cinema-enquiry p {
+    margin: 0 auto 17px !important;
+    padding: 0 !important;
+    line-height: 1.72 !important;
+  }
+  .public-site .cinema-actions {
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+  .public-site .hero-feature-highlights {
+    margin: 18px 0 0 !important;
+    padding: 14px 0 0 !important;
+  }
+}
+@media (max-width: 390px) {
+  .public-site .cinema-hero {
+    padding: 82px 0 18px !important;
+  }
+  .public-site .cinema-content {
+    padding-inline: 17px !important;
+    gap: 16px !important;
+  }
+  .public-site .cinema-statement h1 {
+    font-size: clamp(37px, 10vw, 43px) !important;
+  }
+}
