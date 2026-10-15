@@ -7,7 +7,7 @@ export function CinematicHero(){
   return <div className="hero-scroll-stage"><section className={'cinema-hero'+(imageFailed?' image-fallback':'')} aria-label="Sardaar G exterior cladding">
     <div className="cinema-scene" aria-hidden="true">
       <div className="cinema-sky"/>
-      <div className="cinema-brand-depth"><div className="cinema-wordmark">{'SARDAAR G'.split('').map((letter,i)=><span key={i} style={{animationDelay:`${.08+i*.025}s`}}>{letter===' '?'\u00a0':letter}</span>)}</div></div>
+      <div className="cinema-brand-depth"><div className="cinema-mobile-kicker" aria-hidden="true">EXTERIOR SPECIALISTS</div><div className="cinema-wordmark">{'SARDAAR G'.split('').map((letter,i)=><span key={i} style={{animationDelay:`${.08+i*.025}s`}}>{letter===' '?'\u00a0':letter}</span>)}</div></div>
       <div className="cinema-building-depth"><div className="cinema-building-enter"><img src="/images/hero-foreground.webp" alt="Sardaar G architectural facade installation" fetchPriority="high" width="1536" height="1024" onError={()=>setImageFailed(true)}/></div></div>
       <div className="cinema-shade"/>
     </div>

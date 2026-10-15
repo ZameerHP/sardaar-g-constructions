@@ -6,7 +6,7 @@ const image = (id: string | null) => (id ? "/api/media/" + id : "");
 export const getContent = cache(async (): Promise<Content> => {
   const base: Content = {
     settings: {
-      email: "info@sardaargconst.ca",
+      email: "Info@sardaarg.ca",
       instagram: "https://www.instagram.com/sardaarg_ltd/",
       service_area: "British Columbia, Canada",
     },
@@ -54,7 +54,7 @@ export const getContent = cache(async (): Promise<Content> => {
     ) as any[];
     return {
       settings: settings
-        ? { ...base.settings, ...settings, email: settings.email || base.settings.email }
+        ? { ...base.settings, ...settings, email: "Info@sardaarg.ca" }
         : base.settings,
       services: svc.map((s: any) => ({
         id: s.slug,
