@@ -1188,3 +1188,80 @@
     font-size: clamp(42px, 10.5vw, 66px);
   }
 }
+
+
+/* Mobile hero typography only — preserve all other mobile sections and imagery. */
+@media (max-width: 768px) {
+  .public-site .cinema-brand-depth .cinema-wordmark {
+    font-size: clamp(36px, 10.4vw, 58px) !important;
+    font-weight: 760 !important;
+    letter-spacing: -.075em !important;
+    line-height: .9 !important;
+    text-align: center !important;
+    color: #f6f3eb !important;
+    text-shadow: 0 3px 18px rgba(0,0,0,.32) !important;
+    -webkit-text-stroke: 0 !important;
+    font-kerning: normal;
+  }
+  .public-site .cinema-brand-depth .cinema-wordmark span {
+    color: inherit !important;
+    animation: none !important;
+  }
+  .public-site .cinema-brand-depth .cinema-wordmark span:nth-child(8),
+  .public-site .cinema-brand-depth .cinema-wordmark span:nth-child(9) {
+    color: #d5b779 !important;
+  }
+  .public-site .cinema-statement .label {
+    font-size: 9px !important;
+    font-weight: 650 !important;
+    letter-spacing: .19em !important;
+    line-height: 1.6 !important;
+    color: #d8bd83 !important;
+  }
+  .public-site .cinema-statement h1 {
+    font-size: clamp(43px, 10.8vw, 64px) !important;
+    font-weight: 520 !important;
+    letter-spacing: -.075em !important;
+    line-height: .91 !important;
+    text-wrap: balance !important;
+    color: #fbfaf5 !important;
+    text-shadow: 0 3px 24px rgba(0,0,0,.24) !important;
+  }
+  .public-site .cinema-statement h1 span {
+    display: inline-block;
+    margin-top: 3px;
+    color: #d8bd83 !important;
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-weight: 400 !important;
+    font-style: italic !important;
+    letter-spacing: -.065em !important;
+  }
+  .public-site .cinema-statement .hero-pill-badge {
+    font-size: 8px !important;
+    letter-spacing: .11em !important;
+    font-weight: 650 !important;
+    line-height: 1.5 !important;
+  }
+  .public-site .cinema-enquiry p {
+    font-size: 12px !important;
+    line-height: 1.65 !important;
+    letter-spacing: .005em !important;
+    color: rgba(245,244,236,.82) !important;
+    text-wrap: pretty;
+  }
+  .public-site .cinema-actions .btn,
+  .public-site .cinema-actions .cinema-projects {
+    font-size: 11px !important;
+    font-weight: 650 !important;
+    letter-spacing: .015em !important;
+  }
+}
+@media (max-width: 390px) {
+  .public-site .cinema-brand-depth .cinema-wordmark {
+    font-size: clamp(33px, 9.8vw, 40px) !important;
+    letter-spacing: -.08em !important;
+  }
+  .public-site .cinema-statement h1 {
+    font-size: clamp(39px, 10.5vw, 48px) !important;
+  }
+}
