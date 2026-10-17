@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { ArrowDown,ArrowUpRight } from 'lucide-react';
+import { ArrowDown,ArrowUpRight,ShieldCheck,Building2,BadgeCheck } from 'lucide-react';
 
 export function CinematicHero(){
   const [imageFailed,setImageFailed]=useState(false);
@@ -25,11 +25,11 @@ export function CinematicHero(){
           <a href="/projects" className="cinema-projects">View our projects<ArrowUpRight aria-hidden="true"/></a>
         </div>
         <div className="hero-feature-highlights">
-          <div className="hero-highlight-item"><strong>BC Code</strong><span>Compliant</span></div>
+          <div className="hero-highlight-item"><ShieldCheck className="hero-highlight-icon" size={18} strokeWidth={1.5} aria-hidden="true"/><strong>BC Code</strong><span>Compliant</span></div>
           <div className="hero-highlight-divider"/>
-          <div className="hero-highlight-item"><strong>Commercial & Res.</strong><span>Full Scope</span></div>
+          <div className="hero-highlight-item"><Building2 className="hero-highlight-icon" size={18} strokeWidth={1.5} aria-hidden="true"/><strong>Commercial & Res.</strong><span>Full Scope</span></div>
           <div className="hero-highlight-divider"/>
-          <div className="hero-highlight-item"><strong>Manufacturer</strong><span>Approved Installs</span></div>
+          <div className="hero-highlight-item"><BadgeCheck className="hero-highlight-icon" size={18} strokeWidth={1.5} aria-hidden="true"/><strong>Manufacturer</strong><span>Approved Installs</span></div>
         </div>
       </div>
     </div>

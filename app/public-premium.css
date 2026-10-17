@@ -661,16 +661,16 @@
 }
 .brand-name {
   font-family: inherit;
-  font-weight: 800;
-  font-size: 19px;
-  letter-spacing: 0.12em;
-  color: #173d34;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.1em;
+  color: #c9aa6d;
   line-height: 1.1;
   text-transform: uppercase;
 }
 .header-home:not(.is-scrolled) .brand-name {
-  color: #ffffff;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  color: #dfc184;
+  text-shadow: 0 2px 16px rgba(201, 170, 109, 0.5);
 }
 .brand-tagline {
   font-size: 9.5px;
@@ -702,6 +702,24 @@
   border-radius: 999px;
   margin-bottom: 14px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+/* Hero company label - strong and prominent */
+.cinema-statement .label.gold {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #dfc184;
+  text-shadow: 0 2px 12px rgba(201, 170, 109, 0.35);
+  margin-bottom: 10px;
+}
+/* Mobile menu trigger - visible on dark homepage */
+.header-home:not(.is-scrolled) .menu-trigger {
+  color: #dfc184 !important;
+  border-color: rgba(223, 193, 132, 0.5) !important;
+}
+.header-home:not(.is-scrolled) .menu-trigger:hover {
+  background: rgba(201, 170, 109, 0.12) !important;
+  border-color: #c9aa6d !important;
 }
 .hero-pill-dot {
   width: 6px;
@@ -745,6 +763,65 @@
   height: 24px;
   background: rgba(255, 255, 255, 0.15);
 }
+/* Trust badge icons - consistent style */
+.hero-highlight-icon {
+  color: #c9aa6d;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+}
+/* Hero text contrast improvements */
+.cinema-enquiry p {
+  color: #f0f0e8;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+.cinema-projects {
+  color: #ffffff;
+  border-bottom-color: rgba(255, 255, 255, 0.65);
+}
+/* Manufacturer cards - organized premium layout */
+.manufacturer-list span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px !important;
+  margin: 0 !important;
+  background: #f4f2ed;
+  border: 1px solid #d7d3ca;
+  border-radius: 10px;
+  font-size: 15px !important;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #363e39;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  min-height: 58px;
+}
+.manufacturer-list span:hover {
+  background: #ebe6dc;
+  border-color: #c9aa6d;
+  transform: translateY(-2px);
+}
+.manufacturer-list span img {
+  border-radius: 4px;
+}
+.manufacturer-list span a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.manufacturer-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  border-top: none !important;
+  margin-top: 22px !important;
+}
+/* Footer wordmark - properly aligned */
+.footer-wordmark {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
 
 /* ===================================================
    MOBILE HERO REFINEMENT (ONLY <= 640px)
@@ -769,7 +846,7 @@
     height: 22px !important;
   }
   .brand-name {
-    font-size: 14.5px !important;
+    font-size: 16px !important;
     letter-spacing: 0.08em !important;
   }
   .brand-tagline {
@@ -1045,6 +1122,15 @@
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     border-radius: 10px !important;
     text-align: center !important;
+  }
+  .hero-highlight-item {
+    align-items: center !important;
+  }
+  .hero-highlight-icon {
+    width: 16px !important;
+    height: 16px !important;
+    color: #c9aa6d !important;
+    margin-bottom: 2px !important;
   }
   .hero-highlight-divider {
     display: none !important;

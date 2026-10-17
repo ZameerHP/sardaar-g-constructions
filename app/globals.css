@@ -47,7 +47,7 @@
 .header .brand img{width:52px;height:52px}
 .header .brand-name{font-size:20px;letter-spacing:.025em}
 .header .brand small{color:#3f5050;font-size:8px;letter-spacing:.19em}
-.desktop-nav{gap:clamp(14px,1.55vw,26px)}
+.desktop-nav{gap:clamp(18px,2vw,32px)}
 .desktop-nav a{position:relative;font-size:12px;letter-spacing:.01em;font-weight:500;border:0;padding-block:16px;white-space:nowrap}
 .desktop-nav a:after{content:'';position:absolute;left:0;right:0;bottom:8px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .22s}
 .desktop-nav a:hover,.desktop-nav a.active{color:#17272a}
