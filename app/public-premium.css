@@ -3,8 +3,14 @@
    Consolidated tokens, typography, contrast, layout rhythm, and responsiveness
    ========================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 :root,
 .public-site {
+  /* Typography Tokens */
+  --font-cond: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+
   /* Color Palette */
   --paper: #fafbf8;
   --panel: #f0f4ed;

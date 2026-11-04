@@ -11,7 +11,11 @@ export function supabaseConfig() {
   return url && key ? { url, key } : null;
 }
 export function siteOrigin() {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL;
+  const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (!raw) return "http://localhost:3000";
-  return new URL(raw).origin;
+  try {
+    return new URL(raw.startsWith("http") ? raw : `https://${raw}`).origin;
+  } catch {
+    return "https://sardaar-g-constructions.vercel.app";
+  }
 }

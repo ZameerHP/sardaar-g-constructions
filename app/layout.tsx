@@ -1,23 +1,8 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Plus_Jakarta_Sans } from "next/font/google";
 import { siteOrigin } from "@/lib/supabase/config";
 import { getContent } from "@/lib/content";
 import "./globals.css";
 import "./public-premium.css";
-
-const barlowCondensed = Barlow_Condensed({
-  subsets: ["latin"],
-  weight: ["700", "800"],
-  display: "swap",
-  variable: "--font-cond",
-});
-
-const jakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-  variable: "--font-sans",
-});
 
 const defaultTitle =
   "Exterior Cladding & Siding Contractor BC | Sardaar G Construction";
@@ -66,7 +51,7 @@ export default async function RootLayout({
   const { settings } = await getContent();
   const structured = {
     "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "GeneralContractor", "HomeAndConstructionBusiness"],
+    "@type": "GeneralContractor",
     name: "Sardaar G Construction Ltd.",
     url: siteOrigin(),
     image: `${siteOrigin()}/images/hero-foreground.webp`,
@@ -93,13 +78,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html
-      lang="en"
-      className={`${barlowCondensed.variable} ${jakartaSans.variable}`}
-    >
-      <head>
-        <meta charSet="utf-8" />
-      </head>
+    <html lang="en">
       <body>
         <script
           type="application/ld+json"

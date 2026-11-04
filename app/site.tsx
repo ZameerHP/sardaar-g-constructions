@@ -610,7 +610,10 @@ function ReviewSubmissionSection() {
                   turnstile: token || undefined,
                 }),
               });
-              const res = await r.json();
+              const res = (await r.json()) as {
+                error?: string;
+                message?: string;
+              };
               if (!r.ok)
                 throw new Error(res.error || 'Failed to submit review');
               setStatus('success');
