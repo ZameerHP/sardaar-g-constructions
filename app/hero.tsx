@@ -25,7 +25,11 @@ export function CinematicHero() {
             </div>
             <div className="cinema-wordmark">
               {'SARDAAR G'.split('').map((letter, i) => (
-                <span key={i} style={{ animationDelay: `${0.08 + i * 0.025}s` }}>
+                <span
+                  key={i}
+                  className={letter === ' ' ? 'cinema-wordmark-space' : undefined}
+                  style={{ animationDelay: `${0.06 + i * 0.035}s` }}
+                >
                   {letter === ' ' ? '\u00a0' : letter}
                 </span>
               ))}

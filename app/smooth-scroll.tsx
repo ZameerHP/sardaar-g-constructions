@@ -61,9 +61,11 @@ export function SmoothScroll() {
 
       lenis = new Lenis({
         autoRaf: false,
-        duration: 1.15,
+        lerp: 0.085,
+        duration: 1.25,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
+        wheelMultiplier: 0.95,
         syncTouch: false,
         prevent: (node: HTMLElement) =>
           !!node.closest(

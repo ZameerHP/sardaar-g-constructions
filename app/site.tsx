@@ -302,9 +302,9 @@ export function Frame({
 
       <footer className="footer shell">
         <div className="footer-grid">
-          <div>
+          <div className="footer-brand-col">
             <Brand />
-            <p style={{ marginTop: 24 }}>
+            <p className="footer-tagline">
               Exterior cladding solutions.
               <br />
               Built with care. Finished with pride.
@@ -312,64 +312,79 @@ export function Frame({
               British Columbia, Canada.
             </p>
           </div>
-          <div>
+          <div className="footer-nav-col">
             <div className="label">Explore</div>
-            {nav.slice(1, 5).map(([n, h]) => (
-              <a key={h} href={h}>
-                {n}
-              </a>
-            ))}
-            {content.articles.length > 0 && <a href="/insights">Articles</a>}
+            <div className="footer-links">
+              {nav.slice(1, 5).map(([n, h]) => (
+                <a key={h} href={h}>
+                  {n}
+                </a>
+              ))}
+              {content.articles.length > 0 && <a href="/insights">Articles</a>}
+            </div>
           </div>
-          <div>
+          <div className="footer-nav-col">
             <div className="label">Working together</div>
-            <a href="/our-process">Our process</a>
-            <a href="/warranty">Warranty coverage</a>
-            <a href="/request-a-quote">Request a quote</a>
-            <a href="/service-areas">Service areas</a>
-            <a href="/contact">Contact</a>
+            <div className="footer-links">
+              <a href="/our-process">Our process</a>
+              <a href="/warranty">Warranty coverage</a>
+              <a href="/request-a-quote">Request a quote</a>
+              <a href="/service-areas">Service areas</a>
+              <a href="/contact">Contact</a>
+            </div>
           </div>
-          <div>
+          <div className="footer-nav-col">
             <div className="label">Get in touch</div>
-            <a href={phoneHref}>{phoneDisplay}</a>
-            <a href={emailHref}>info@sardaarg.ca</a>
-            <a
-              href={instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Instagram
-            </a>
-            <a href="/service-areas">
-              {content.settings.service_area || 'Across British Columbia'}
-            </a>
+            <div className="footer-links">
+              <a href={phoneHref}>{phoneDisplay}</a>
+              <a href={emailHref}>info@sardaarg.ca</a>
+              <a
+                href={instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram
+              </a>
+              <a href="/service-areas">
+                {content.settings.service_area || 'Across British Columbia'}
+              </a>
+            </div>
           </div>
         </div>
 
         <div className="footer-wordmark" aria-hidden="true">
           <svg
             className="footer-wordmark-svg"
-            viewBox="0 0 1200 165"
-            preserveAspectRatio="xMinYMid meet"
+            viewBox="0 0 1280 175"
+            preserveAspectRatio="xMidYMid meet"
             role="presentation"
           >
+            <defs>
+              <linearGradient id="footer-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#f6e6c2" />
+                <stop offset="50%" stopColor="#dfc184" />
+                <stop offset="100%" stopColor="#b38b40" />
+              </linearGradient>
+            </defs>
             <text
               x="0"
-              y="132"
-              textLength="1196"
-              lengthAdjust="spacingAndGlyphs"
+              y="138"
+              textLength="1276"
+              lengthAdjust="spacing"
             >
-              SARDAAR G.
+              <tspan fill="#ebe8df">SARDAAR</tspan>
+              <tspan dx="38" fill="url(#footer-gold-grad)">G.</tspan>
             </text>
           </svg>
         </div>
 
         <div className="footer-bottom">
           <span>
-            © {new Date().getFullYear()} Sardaar G Construction Ltd.
+            © {new Date().getFullYear()} Sardaar G Construction Ltd. All rights reserved.
           </span>
-          <span>
-            <a href="/privacy">Privacy</a> &nbsp; / &nbsp;{' '}
+          <span className="footer-legal-links">
+            <a href="/privacy">Privacy Policy</a>
+            <span className="footer-divider" aria-hidden="true">/</span>
             <a href="/admin/login">Owner access</a>
           </span>
         </div>

@@ -86,8 +86,19 @@ export function MotionDirector() {
       });
 
       const hero = document.querySelector<HTMLElement>('.cinema-hero');
-      const header = document.querySelector<HTMLElement>('.header');
       let frame = 0;
+      let currentProgress = 0;
+      let targetProgress = 0;
+      let currentPointerX = 0;
+      let currentPointerY = 0;
+      let targetPointerX = 0;
+      let targetPointerY = 0;
+
+      const updateTargetScroll = () => {
+        if (!hero) return;
+        const heroHeight = Math.max(640, hero.offsetHeight || window.innerHeight);
+        targetProgress = Math.min(1, Math.max(0, window.scrollY / (heroHeight * 0.92)));
+      };
 
       const tick = () => {
         frame = 0;
@@ -98,23 +109,41 @@ export function MotionDirector() {
           hero.style.removeProperty('--brand-scale');
           hero.style.removeProperty('--scene-scale');
           hero.style.removeProperty('--scene-drop');
+          hero.style.removeProperty('--pointer-x');
+          hero.style.removeProperty('--pointer-y');
+          hero.style.removeProperty('--meta-opacity');
           return;
         }
-        const stage = hero.parentElement;
-        if (!stage) return;
-        const stageRect = stage.getBoundingClientRect();
-        const heroRect = hero.getBoundingClientRect();
-        const top = header?.getBoundingClientRect().height || 84;
-        const maxTravel = Math.max(1, stageRect.height - heroRect.height);
-        const progress = Math.min(1, Math.max(0, (top - stageRect.top) / maxTravel));
-        const smooth = progress * progress * (3 - 2 * progress);
 
-        hero.style.setProperty('--hero-scroll', String(progress));
-        hero.style.setProperty('--brand-rise', `${smooth * -36}px`);
-        hero.style.setProperty('--brand-scale', String(1 + smooth * 0.04));
-        hero.style.setProperty('--scene-scale', String(1.06 - smooth * 0.06));
-        hero.style.setProperty('--scene-drop', `${smooth * 16}px`);
-        hero.style.setProperty('--meta-opacity', String(1 - Math.min(1, progress * 2.5)));
+        updateTargetScroll();
+
+        // Silky damped interpolation (60fps+ inertia that settles cleanly to idle)
+        currentProgress += (targetProgress - currentProgress) * 0.11;
+        currentPointerX += (targetPointerX - currentPointerX) * 0.08;
+        currentPointerY += (targetPointerY - currentPointerY) * 0.08;
+
+        const smooth = currentProgress * currentProgress * (3 - 2 * currentProgress);
+
+        hero.style.setProperty('--hero-scroll', currentProgress.toFixed(4));
+        hero.style.setProperty('--brand-rise', `${(smooth * -42).toFixed(2)}px`);
+        hero.style.setProperty('--brand-scale', (1 + smooth * 0.045).toFixed(4));
+        hero.style.setProperty('--scene-scale', (1.065 - smooth * 0.065).toFixed(4));
+        hero.style.setProperty('--scene-drop', `${(smooth * 22).toFixed(2)}px`);
+        hero.style.setProperty('--pointer-x', `${currentPointerX.toFixed(2)}px`);
+        hero.style.setProperty('--pointer-y', `${currentPointerY.toFixed(2)}px`);
+        hero.style.setProperty(
+          '--meta-opacity',
+          Math.max(0, 1 - currentProgress * 2.1).toFixed(3),
+        );
+
+        const stillMoving =
+          Math.abs(targetProgress - currentProgress) > 0.0006 ||
+          Math.abs(targetPointerX - currentPointerX) > 0.04 ||
+          Math.abs(targetPointerY - currentPointerY) > 0.04;
+
+        if (stillMoving) {
+          frame = requestAnimationFrame(tick);
+        }
       };
 
       const schedule = () => {
@@ -123,9 +152,21 @@ export function MotionDirector() {
         }
       };
 
+      const onPointerMove = (e: PointerEvent) => {
+        if (window.innerWidth <= 768) return;
+        const nx = (e.clientX / Math.max(1, window.innerWidth) - 0.5) * 2;
+        const ny = (e.clientY / Math.max(1, window.innerHeight) - 0.5) * 2;
+        targetPointerX = nx * 10;
+        targetPointerY = ny * 6;
+        schedule();
+      };
+
       window.addEventListener('scroll', schedule, { passive: true });
       window.addEventListener('resize', schedule, { passive: true });
+      window.addEventListener('pointermove', onPointerMove, { passive: true });
       document.addEventListener('visibilitychange', schedule);
+      updateTargetScroll();
+      currentProgress = targetProgress;
       schedule();
 
       teardown = () => {
@@ -134,6 +175,7 @@ export function MotionDirector() {
         animations.forEach(a => a.cancel());
         window.removeEventListener('scroll', schedule);
         window.removeEventListener('resize', schedule);
+        window.removeEventListener('pointermove', onPointerMove);
         document.removeEventListener('visibilitychange', schedule);
         if (hero) {
           [
@@ -143,6 +185,8 @@ export function MotionDirector() {
             '--brand-rise',
             '--scene-scale',
             '--scene-drop',
+            '--pointer-x',
+            '--pointer-y',
           ].forEach(p => hero.style.removeProperty(p));
         }
       };
