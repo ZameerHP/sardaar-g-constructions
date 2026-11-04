@@ -1,12 +1,21 @@
 import { cache } from "react";
 import { publicClient } from "./supabase/server";
 import { supabaseConfig } from "./supabase/config";
-import { services, manufacturers, type Content, type RecordData } from "./data";
+import {
+  services,
+  manufacturers,
+  formatPhoneDisplay,
+  type Content,
+  type RecordData,
+} from "./data";
+
 const image = (id: string | null) => (id ? "/api/media/" + id : "");
+
 export const getContent = cache(async (): Promise<Content> => {
   const base: Content = {
     settings: {
-      email: "Info@sardaarg.ca",
+      phone: "778-681-1313",
+      email: "info@sardaarg.ca",
       instagram: "https://www.instagram.com/sardaarg_ltd/",
       service_area: "British Columbia, Canada",
     },
@@ -52,28 +61,45 @@ export const getContent = cache(async (): Promise<Content> => {
     const [projects, svc, brands, reviews, settings, posts] = results.map(
       (r) => r.data,
     ) as any[];
+    const mergedSettings = settings
+      ? {
+          ...base.settings,
+          ...settings,
+          phone: formatPhoneDisplay(settings.phone || base.settings.phone),
+          email: "info@sardaarg.ca",
+          instagram:
+            settings.instagram && settings.instagram.startsWith("https://")
+              ? settings.instagram
+              : base.settings.instagram,
+        }
+      : base.settings;
+
     return {
-      settings: settings
-        ? { ...base.settings, ...settings, email: "Info@sardaarg.ca" }
-        : base.settings,
-      services: svc.map((s: any) => ({
-        id: s.slug,
-        title: s.title,
-        summary: s.summary,
-        body: s.description,
-        materials: s.bullet_points.join(", "),
-        bulletPoints: s.bullet_points,
-        image: image(s.image_id) || s.fallback_image,
-        imageAlt: s.image_alt,
-        seoTitle: s.seo_title,
-        seoDescription: s.seo_description,
-        ogImage: image(s.og_image_id) || image(s.image_id),
-      })),
-      manufacturers: brands.map((b: any) => b.brand_name),
-      manufacturerDetails: brands.map((b: any) => ({
-        ...b,
-        logo: image(b.logo_id),
-      })),
+      settings: mergedSettings,
+      services: svc.length
+        ? svc.map((s: any) => ({
+            id: s.slug,
+            title: s.title,
+            summary: s.summary,
+            body: s.description,
+            materials: s.bullet_points.join(", "),
+            bulletPoints: s.bullet_points,
+            image: image(s.image_id) || s.fallback_image,
+            imageAlt: s.image_alt,
+            seoTitle: s.seo_title,
+            seoDescription: s.seo_description,
+            ogImage: image(s.og_image_id) || image(s.image_id),
+          }))
+        : services,
+      manufacturers: brands.length
+        ? brands.map((b: any) => b.brand_name)
+        : manufacturers,
+      manufacturerDetails: brands.length
+        ? brands.map((b: any) => ({
+            ...b,
+            logo: image(b.logo_id),
+          }))
+        : undefined,
       projects: projects.map((p: any): RecordData => ({
         id: p.id,
         kind: "project",
@@ -140,6 +166,6 @@ export const getContent = cache(async (): Promise<Content> => {
     };
   } catch {
     console.error("Public content unavailable");
-    return { ...base, services: [], manufacturers: [], unavailable: true };
+    return { ...base, unavailable: true };
   }
 });

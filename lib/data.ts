@@ -1,14 +1,177 @@
 export const services = [
- {id:'exterior-cladding',title:'Exterior Cladding',summary:'A considered finish. A lasting first impression.',body:'Precision installation of exterior systems for contemporary buildings, from fiber cement and metal to architectural panels. We coordinate with the project team to deliver clean lines and carefully finished details.',materials:'Fiber cement siding, metal siding, ACM panels, vinyl siding, engineered wood siding, panel siding, architectural cladding',image:'seattle-facade'},
- {id:'siding-systems',title:'Siding Systems',summary:'The right system for your project.',body:'Professional siding installation for new builds, custom homes and exterior renovations. We work with the specified system and coordinate transitions, trims and finishing details.',materials:'James Hardie, Allura, vinyl, metal, engineered wood, other approved siding systems',image:'timber-home'},
- {id:'rainscreen-weather-protection',title:'Rainscreen & Weather Protection',summary:'Attention to what sits beneath the surface.',body:'Careful coordination of weather barriers, rainscreen assemblies and flashings with the exterior finish. Installation follows the project specifications and approved details.',materials:'Rainscreen assemblies, building paper, Tyvek, SuperGuard, VP100, flashings, strapping and furring systems',image:'black-commercial'},
- {id:'soffit-fascia',title:'Soffit & Fascia',summary:'A clean finish, from every angle.',body:'Soffit, fascia and custom trim installation that brings consistency to rooflines and exterior transitions. We plan the details alongside the wider cladding scope.',materials:'Aluminum soffit, metal soffit, fascia, custom exterior trims',image:'timber-home'},
- {id:'architectural-details',title:'Architectural Details',summary:'Where good work becomes distinctive.',body:'Architectural accents, panel transitions and carefully aligned trims. Our focus is a consistent exterior finish that respects the design intent and specified materials.',materials:'Metal trims, ACM, metal panels, slat walls, custom cladding details, exterior accent features',image:'black-commercial'},
- {id:'multi-family-commercial',title:'Multi-Family & Commercial',summary:'Organised crews. Coordinated delivery.',body:'Exterior installation for larger developments, with attention to phasing, site coordination and reliable communication. We work with builders, developers and general contractors from planning through completion.',materials:'Townhouse developments, condominiums, low-rise buildings, commercial buildings, large-scale residential projects',image:'seattle-facade'}
+  {
+    id: 'exterior-cladding',
+    title: 'Exterior Cladding',
+    summary: 'A considered finish. A lasting first impression.',
+    body: 'Precision installation of exterior systems for contemporary buildings, from fiber cement and metal to architectural panels. We coordinate with the project team to deliver clean lines and carefully finished details.',
+    materials: 'Fiber cement siding, metal siding, ACM panels, vinyl siding, engineered wood siding, panel siding, architectural cladding',
+    image: 'seattle-facade',
+  },
+  {
+    id: 'siding-systems',
+    title: 'Siding Systems',
+    summary: 'The right system for your project.',
+    body: 'Professional siding installation for new builds, custom homes and exterior renovations. We work with the specified system and coordinate transitions, trims and finishing details.',
+    materials: 'James Hardie, Allura, vinyl, metal, engineered wood, other approved siding systems',
+    image: 'timber-home',
+  },
+  {
+    id: 'rainscreen-weather-protection',
+    title: 'Rainscreen & Weather Protection',
+    summary: 'Attention to what sits beneath the surface.',
+    body: 'Careful coordination of weather barriers, rainscreen assemblies and flashings with the exterior finish. Installation follows the project specifications and approved details.',
+    materials: 'Rainscreen assemblies, building paper, Tyvek, SuperGuard, VP100, flashings, strapping and furring systems',
+    image: 'black-commercial',
+  },
+  {
+    id: 'soffit-fascia',
+    title: 'Soffit & Fascia',
+    summary: 'A clean finish, from every angle.',
+    body: 'Soffit, fascia and custom trim installation that brings consistency to rooflines and exterior transitions. We plan the details alongside the wider cladding scope.',
+    materials: 'Aluminum soffit, metal soffit, fascia, custom exterior trims',
+    image: 'timber-home',
+  },
+  {
+    id: 'architectural-details',
+    title: 'Architectural Details',
+    summary: 'Where good work becomes distinctive.',
+    body: 'Architectural accents, panel transitions and carefully aligned trims. Our focus is a consistent exterior finish that respects the design intent and specified materials.',
+    materials: 'Metal trims, ACM, metal panels, slat walls, custom cladding details, exterior accent features',
+    image: 'black-commercial',
+  },
+  {
+    id: 'multi-family-commercial',
+    title: 'Multi-Family & Commercial',
+    summary: 'Organised crews. Coordinated delivery.',
+    body: 'Exterior installation for larger developments, with attention to phasing, site coordination and reliable communication. We work with builders, developers and general contractors from planning through completion.',
+    materials: 'Townhouse developments, condominiums, low-rise buildings, commercial buildings, large-scale residential projects',
+    image: 'seattle-facade',
+  },
 ];
-export const steps=[['Project Inquiry','Send project details, drawings or scope of work.','Tell us about the building, its location, your materials and the anticipated schedule. Share drawings to help define the installation scope.'],['Review & Estimate','Review plans, specifications, materials and project requirements.','We review the information supplied, identify questions and discuss the scope before preparing an estimate.'],['Project Planning','Coordinate schedule, materials, manpower and site requirements.','Clear planning helps align deliveries, site access and installation sequencing with the wider construction programme.'],['Installation','Complete exterior cladding installation according to project requirements.','Our crews focus on workmanship, coordination and a clean working environment, with communication throughout the installation.'],['Completion & Quality Check','Finish details, address deficiencies and leave the work area clean.','We review the completed scope and finishing details with the project team, addressing outstanding items through the agreed close-out process.']];
-export const industries=[['Residential','Custom homes, exterior renovations and siding replacement.'],['Multi-Family','Townhouses, condominiums and low-rise residential buildings.'],['Commercial','Exterior cladding for commercial and mixed-use buildings.'],['New Construction','Coordination from the planning stage through installation and completion.']];
-export const areas=['Lower Mainland','Fraser Valley','Metro Vancouver','Vancouver Island','Interior BC'];
-export const manufacturers=['James Hardie','Allura','Vicwest','Longboard','Nichiha','Brikclad','Tyvek'];
-export type RecordData={id:string;kind:string;slug:string;title:string;published:boolean;data:any};
-export type Content={settings:any;services:(typeof services[number] & {bulletPoints?:string[];imageAlt?:string;seoTitle?:string;seoDescription?:string;ogImage?:string})[];projects:RecordData[];articles:RecordData[];testimonials:RecordData[];manufacturers:string[];manufacturerDetails?:{id:string;brand_name:string;logo:string;logo_alt:string;website:string}[];unavailable?:boolean};
+
+export const steps = [
+  [
+    'Project Inquiry',
+    'Send project details, drawings or scope of work.',
+    'Tell us about the building, its location, your materials and the anticipated schedule. Share drawings to help define the installation scope.',
+  ],
+  [
+    'Review & Estimate',
+    'Review plans, specifications, materials and project requirements.',
+    'We review the information supplied, identify questions and discuss the scope before preparing an estimate.',
+  ],
+  [
+    'Project Planning',
+    'Coordinate schedule, materials, manpower and site requirements.',
+    'Clear planning helps align deliveries, site access and installation sequencing with the wider construction programme.',
+  ],
+  [
+    'Installation',
+    'Complete exterior cladding installation according to project requirements.',
+    'Our crews focus on workmanship, coordination and a clean working environment, with communication throughout the installation.',
+  ],
+  [
+    'Completion & Quality Check',
+    'Finish details, address deficiencies and leave the work area clean.',
+    'We review the completed scope and finishing details with the project team, addressing outstanding items through the agreed close-out process.',
+  ],
+];
+
+export const industries = [
+  ['Residential', 'Custom homes, exterior renovations and siding replacement.'],
+  ['Multi-Family', 'Townhouses, condominiums and low-rise residential buildings.'],
+  ['Commercial', 'Exterior cladding for commercial and mixed-use buildings.'],
+  ['New Construction', 'Coordination from the planning stage through installation and completion.'],
+];
+
+export const areas = [
+  'Lower Mainland',
+  'Fraser Valley',
+  'Metro Vancouver',
+  'Vancouver Island',
+  'Interior BC',
+];
+
+export const manufacturers = [
+  'James Hardie',
+  'Allura',
+  'Vicwest',
+  'Longboard',
+  'Nichiha',
+  'Brikclad',
+  'Tyvek',
+];
+
+export const manufacturerCategories: Record<string, string> = {
+  'James Hardie': 'Fiber cement siding & trim',
+  'Allura': 'Fiber cement cladding panels',
+  'Vicwest': 'Metal cladding panels',
+  'Longboard': 'Wood-look aluminum cladding',
+  'Nichiha': 'Architectural wall panels',
+  'Brikclad': 'Architectural masonry cladding',
+  'Tyvek': 'Weather-resistive barrier',
+};
+
+export function formatPhoneDisplay(raw?: string | null): string {
+  const cleaned = (raw || '')
+    .replace(/[\u200B-\u200D\uFEFF\u2060]/g, '')
+    .trim();
+  if (!cleaned || /invalid|zCSafez|javascript:/i.test(cleaned)) {
+    return '778-681-1313';
+  }
+  const digits = cleaned.replace(/\D/g, '');
+  if (digits.length < 7) return '778-681-1313';
+  return cleaned;
+}
+
+export function formatPhoneHref(raw?: string | null): string {
+  const display = formatPhoneDisplay(raw);
+  const digits = display.replace(/\D/g, '');
+  if (!digits || digits.length < 7) return 'tel:+17786811313';
+  if (digits.length === 10) return `tel:+1${digits}`;
+  if (digits.length === 11 && digits.startsWith('1')) return `tel:+${digits}`;
+  return `tel:+${digits}`;
+}
+
+export function formatEmailHref(raw?: string | null): string {
+  const cleaned = (raw || '')
+    .replace(/[\u200B-\u200D\uFEFF\u2060\s]/g, '')
+    .toLowerCase();
+  if (!cleaned || !cleaned.includes('@') || /invalid|zCSafez/i.test(cleaned)) {
+    return 'mailto:info@sardaarg.ca';
+  }
+  return `mailto:${cleaned}`;
+}
+
+export type RecordData = {
+  id: string;
+  kind: string;
+  slug: string;
+  title: string;
+  published: boolean;
+  data: any;
+};
+
+export type Content = {
+  settings: any;
+  services: (typeof services[number] & {
+    bulletPoints?: string[];
+    imageAlt?: string;
+    seoTitle?: string;
+    seoDescription?: string;
+    ogImage?: string;
+  })[];
+  projects: RecordData[];
+  articles: RecordData[];
+  testimonials: RecordData[];
+  manufacturers: string[];
+  manufacturerDetails?: {
+    id: string;
+    brand_name: string;
+    logo: string;
+    logo_alt: string;
+    website: string;
+    category?: string;
+  }[];
+  unavailable?: boolean;
+};

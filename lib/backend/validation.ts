@@ -135,7 +135,19 @@ export const schemas = {
   contact_settings: z
     .object({
       id: z.literal(1),
-      phone: str(50),
+      phone: z
+        .string()
+        .transform((s) => s.replace(/[\u200B-\u200D\uFEFF\u2060]/g, "").trim())
+        .pipe(
+          z
+            .string()
+            .max(50)
+            .refine(
+              (s) => !s || /^[+\d\s().-]+$/.test(s),
+              "Enter a valid phone number",
+            ),
+        )
+        .default(""),
       email: z.union([z.literal(""), z.string().email().max(254)]),
       instagram: https,
       service_area: str(500),
