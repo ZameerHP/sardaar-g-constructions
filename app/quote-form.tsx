@@ -329,6 +329,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
               Scope of work *
               <textarea
                 name="scope"
+                data-lenis-prevent
                 required
                 minLength={10}
                 maxLength={10000}
@@ -399,6 +400,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
                   Additional message
                   <textarea
                     name="message"
+                    data-lenis-prevent
                     maxLength={5000}
                     placeholder="Anything else we should know?"
                   />
