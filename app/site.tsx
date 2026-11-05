@@ -737,7 +737,7 @@ function ReviewSubmissionSection() {
             </div>
           )}
           <div className="field wide" style={{ marginTop: 10 }}>
-            <button className="btn dark" type="submit" disabled={busy}>
+            <button className="btn dark designer-submit-btn" type="submit" disabled={busy}>
               <span>{busy ? 'Submitting Review…' : 'Submit Client Review'}</span>
               <ArrowUpRight aria-hidden="true" />
             </button>
@@ -1971,56 +1971,95 @@ export function ContentPage({
         {(path === 'contact' || path === 'request-a-quote') && (
           <div className="quote-layout">
             <aside className="quote-aside">
-              <div className="label">Let’s work together</div>
-              <h2>
-                Bring us
-                <br />
-                your vision.
-              </h2>
-              <p>
-                Multi-family, commercial, new construction or residential — we’d
-                like to hear what you’re planning.
-              </p>
-              <div className="detail">
-                <MapPin aria-hidden="true" />
-                <p>
-                  {content.settings.service_area || 'British Columbia, Canada'}
+              <div className="quote-aside-head">
+                <div className="label">Let’s work together</div>
+                <h2>
+                  Bring us
                   <br />
-                  Available to travel for larger projects.
+                  <em>your vision.</em>
+                </h2>
+                <p>
+                  Multi-family, commercial, new construction or residential — we’d
+                  like to hear what you’re planning.
                 </p>
               </div>
-              <div className="detail">
-                <p style={{ fontWeight: 600, marginBottom: 6 }}>Phone</p>
-                <p style={{ margin: 0 }}>
-                  <a href={phoneHref}>{phoneDisplay}</a>
-                </p>
+
+              <div className="contact-cards-grid">
+                <a className="contact-info-card" href={phoneHref}>
+                  <span className="contact-card-icon" aria-hidden="true">
+                    <Phone size={18} strokeWidth={1.6} />
+                  </span>
+                  <div className="contact-card-body">
+                    <span className="contact-card-label">Direct Phone</span>
+                    <strong>{phoneDisplay}</strong>
+                    <small>Click to call our BC team</small>
+                  </div>
+                  <ArrowUpRight className="contact-card-arrow" size={16} aria-hidden="true" />
+                </a>
+
+                <a className="contact-info-card" href={emailHref}>
+                  <span className="contact-card-icon" aria-hidden="true">
+                    <Mail size={18} strokeWidth={1.6} />
+                  </span>
+                  <div className="contact-card-body">
+                    <span className="contact-card-label">Email Enquiries</span>
+                    <strong>info@sardaarg.ca</strong>
+                    <small>Send plans, specs, or questions</small>
+                  </div>
+                  <ArrowUpRight className="contact-card-arrow" size={16} aria-hidden="true" />
+                </a>
+
+                <div className="contact-info-card is-static">
+                  <span className="contact-card-icon" aria-hidden="true">
+                    <MapPin size={18} strokeWidth={1.6} />
+                  </span>
+                  <div className="contact-card-body">
+                    <span className="contact-card-label">Service Coverage</span>
+                    <strong>
+                      {content.settings.service_area || 'British Columbia, Canada'}
+                    </strong>
+                    <small>
+                      {content.settings.address ||
+                        'Lower Mainland, Fraser Valley, Metro Vancouver, Island & Interior BC'}
+                    </small>
+                  </div>
+                </div>
+
+                <a
+                  className="contact-info-card"
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="contact-card-icon" aria-hidden="true">
+                    <ShieldCheck size={18} strokeWidth={1.6} />
+                  </span>
+                  <div className="contact-card-body">
+                    <span className="contact-card-label">Recent Field Work</span>
+                    <strong>Instagram · @sardaarg_ltd</strong>
+                    <small>View active BC exterior installations</small>
+                  </div>
+                  <ArrowUpRight className="contact-card-arrow" size={16} aria-hidden="true" />
+                </a>
               </div>
-              <div className="detail">
-                <p style={{ fontWeight: 600, marginBottom: 6 }}>Email</p>
-                <p style={{ margin: 0 }}>
-                  <a href={emailHref}>info@sardaarg.ca</a>
-                </p>
-              </div>
-              <TextLink href={instagramUrl}>Instagram</TextLink>
-              {content.settings.address && <p>{content.settings.address}</p>}
+
               {content.settings.maps_embed_url && (
                 <iframe
                   title="Our location"
                   src={content.settings.maps_embed_url}
                   loading="lazy"
                   referrerPolicy="no-referrer"
-                  style={{
-                    width: '100%',
-                    height: 220,
-                    border: 0,
-                    marginTop: 25,
-                  }}
+                  className="contact-map-iframe"
                 />
               )}
+
               {path === 'contact' && (
-                <TextLink href="/request-a-quote">
-                  Send drawings &amp; request a quote
-                </TextLink>
+                <div className="quote-aside-switch">
+                  <p>Have architectural drawings or a take-off package ready?</p>
+                  <TextLink href="/request-a-quote">
+                    Send drawings &amp; request a quote
+                  </TextLink>
+                </div>
               )}
             </aside>
             <QuoteForm compact={path === 'contact'} />

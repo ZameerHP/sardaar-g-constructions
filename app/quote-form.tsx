@@ -3,7 +3,15 @@ import { Turnstile } from "./turnstile";
 import { api, directUpload } from "@/lib/backend/upload-client";
 import { newId } from "@/lib/id";
 import { useState, useEffect, useRef } from "react";
-import { ArrowUpRight, Upload, CheckCircle2, X, FileText } from "lucide-react";
+import {
+  ArrowUpRight,
+  Upload,
+  CheckCircle2,
+  X,
+  FileText,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -29,9 +37,9 @@ export function Choice({
 }) {
   return (
     <div className="field">
-      <label id={name + "-label"}>
-        {label}
-        {required ? " *" : ""}
+      <label className="field-label" id={name + "-label"}>
+        <span>{label}</span>
+        {required && <span className="field-required">*</span>}
       </label>
       <Select
         name={name}
@@ -39,7 +47,10 @@ export function Choice({
         onValueChange={onChange}
         required={required}
       >
-        <SelectTrigger aria-labelledby={name + "-label"}>
+        <SelectTrigger
+          className="designer-select-trigger"
+          aria-labelledby={name + "-label"}
+        >
           <SelectValue placeholder="Select an option" />
         </SelectTrigger>
         <SelectContent>
@@ -223,16 +234,31 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <form ref={form} onSubmit={submit} className="form-grid">
+    <form ref={form} onSubmit={submit} className="designer-form-card">
+      <div className="designer-form-top">
+        <div>
+          <span className="designer-form-kicker">
+            <Sparkles size={13} aria-hidden="true" />
+            {compact ? "Direct Project & General Enquiry" : "Project Estimate & Scope Review"}
+          </span>
+          <h3 className="designer-form-heading">
+            {compact ? "Tell us about your project." : "Request a detailed quote."}
+          </h3>
+        </div>
+        <span className="designer-form-badge">BC Exterior Specialists</span>
+      </div>
+
       {success ? (
         <div
-          className="field wide form-message"
+          className="field wide form-message form-success-card"
           ref={messageRef}
           tabIndex={-1}
           role="status"
         >
-          <CheckCircle2 size={32} />
-          <h3 style={{ fontSize: 26, marginTop: 16 }}>Thank you.</h3>
+          <div className="form-success-icon">
+            <CheckCircle2 size={32} />
+          </div>
+          <h3>Thank you for reaching out.</h3>
           <p>{message}</p>
         </div>
       ) : (
@@ -241,50 +267,93 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
             disabled={busy || !!pending.current}
             className="form-grid quote-fields"
           >
-            <h3 className="form-section-title">01 / Your details</h3>
+            <div className="form-section-title">
+              <span className="form-step-pill">01</span>
+              <div>
+                <h4>Your Contact Details</h4>
+                <p>Who should our estimating team follow up with?</p>
+              </div>
+            </div>
+
             <label className="field">
-              Full name *
-              <input name="name" autoComplete="name" required maxLength={120} />
+              <span className="field-label">
+                <span>Full name</span>
+                <span className="field-required">*</span>
+              </span>
+              <input
+                name="name"
+                autoComplete="name"
+                placeholder="e.g. Alex Sidhu"
+                required
+                maxLength={120}
+              />
             </label>
+
             <label className="field">
-              Company
+              <span className="field-label">
+                <span>Company / Firm</span>
+                <span className="field-optional">Optional</span>
+              </span>
               <input
                 name="company"
                 autoComplete="organization"
+                placeholder="Builder, developer, or homeowner"
                 maxLength={160}
               />
             </label>
+
             <label className="field">
-              Email address *
+              <span className="field-label">
+                <span>Email address</span>
+                <span className="field-required">*</span>
+              </span>
               <input
                 name="email"
                 type="email"
                 autoComplete="email"
+                placeholder="name@company.ca"
                 required
                 maxLength={254}
               />
             </label>
+
             <label className="field">
-              Phone number *
+              <span className="field-label">
+                <span>Phone number</span>
+                <span className="field-required">*</span>
+              </span>
               <input
                 name="phone"
                 type="tel"
                 autoComplete="tel"
+                placeholder="778-000-0000"
                 required
                 minLength={7}
                 maxLength={35}
               />
             </label>
-            <h3 className="form-section-title">02 / Your project</h3>
+
+            <div className="form-section-title">
+              <span className="form-step-pill">02</span>
+              <div>
+                <h4>Project Information</h4>
+                <p>Location, building sector, and exterior cladding scope.</p>
+              </div>
+            </div>
+
             <label className="field">
-              Project location *
+              <span className="field-label">
+                <span>Project location</span>
+                <span className="field-required">*</span>
+              </span>
               <input
                 name="location"
-                placeholder="City or region in BC"
+                placeholder="City or region in BC (e.g. Surrey, Vancouver)"
                 required
                 maxLength={180}
               />
             </label>
+
             <Choice
               name="type"
               label="Project type"
@@ -300,10 +369,14 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
                 "Other",
               ]}
             />
+
             {!compact && (
               <>
                 <label className="field">
-                  Approximate project size
+                  <span className="field-label">
+                    <span>Approximate project size</span>
+                    <span className="field-optional">Optional</span>
+                  </span>
                   <input
                     name="size"
                     placeholder="e.g. 12 townhomes, 5,000 sq ft, or not sure"
@@ -312,40 +385,53 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
                 </label>
                 <Choice
                   name="timing"
-                  label="Start date"
+                  label="Target start window"
                   value={timing}
                   onChange={setTiming}
                   options={["To be discussed", "Flexible", "Specific date"]}
                 />
                 {timing === "Specific date" && (
-                  <label className="field">
-                    Preferred start date
+                  <label className="field wide">
+                    <span className="field-label">
+                      <span>Preferred start date</span>
+                    </span>
                     <input type="date" name="startDate" />
                   </label>
                 )}
               </>
             )}
+
             <label className="field wide">
-              Scope of work *
+              <span className="field-label">
+                <span>Scope of work &amp; project details</span>
+                <span className="field-required">*</span>
+              </span>
               <textarea
                 name="scope"
                 data-lenis-prevent
                 required
                 minLength={10}
                 maxLength={10000}
-                placeholder="Tell us about the exterior systems, materials and installation scope you have in mind."
+                placeholder="Tell us about the exterior systems (James Hardie, metal panels, rainscreen, cedar/aluminum soffits), schedule, and installation scope you have in mind."
               />
             </label>
+
             {refProject && (
-              <p className="field wide form-note">
-                Project reference: {refProject}
+              <p className="field wide form-reference-pill">
+                Referenced project / service: <strong>{refProject}</strong>
               </p>
             )}
+
             {!compact && (
               <>
-                <h3 className="form-section-title">
-                  03 / Drawings & additional details
-                </h3>
+                <div className="form-section-title">
+                  <span className="form-step-pill">03</span>
+                  <div>
+                    <h4>Drawings &amp; Additional Details</h4>
+                    <p>Attach architectural elevations, plans, or site photos.</p>
+                  </div>
+                </div>
+
                 <div
                   className="field wide"
                   onDragOver={(e) => e.preventDefault()}
@@ -355,64 +441,78 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
                     addFiles(Array.from(e.dataTransfer.files));
                   }}
                 >
-                  <label htmlFor="drawings">Drawings, plans or photos</label>
-                  <p className="form-note">
-                    PDF, JPG, PNG or WebP. Up to 6 files; 20 MB per file, 60 MB
-                    total. Drag files here or choose below. Files are stored
-                    privately.
-                  </p>
-                  <input
-                    id="drawings"
-                    disabled={busy || !!pending.current}
-                    type="file"
-                    multiple
-                    accept=".pdf,.jpg,.jpeg,.png,.webp"
-                    onChange={(e) => {
-                      addFiles(Array.from(e.target.files || []));
-                      e.target.value = "";
-                    }}
-                  />
-                  {files.map((f, i) => (
-                    <div
-                      className="flex items-center justify-between gap-3"
-                      key={i}
-                    >
-                      <FileText size={20} />
-                      <span style={{ flex: 1, overflowWrap: "anywhere" }}>
-                        {f.name}{" "}
-                        <small>({(f.size / 1024 / 1024).toFixed(1)} MB)</small>
-                      </span>
-                      <button
-                        type="button"
-                        disabled={busy || !!pending.current}
-                        aria-label={"Remove " + f.name}
-                        className="filter"
-                        onClick={() =>
-                          setFiles(files.filter((_, j) => j !== i))
-                        }
-                      >
-                        <X size={16} />
-                      </button>
+                  <label htmlFor="drawings" className="upload-dropzone">
+                    <div className="upload-dropzone-icon" aria-hidden="true">
+                      <Upload size={22} />
                     </div>
-                  ))}
+                    <div className="upload-dropzone-copy">
+                      <strong>Click to upload or drag &amp; drop files here</strong>
+                      <span>
+                        PDF, JPG, PNG or WebP · Up to 6 files (20 MB each, 60 MB total) · Stored privately
+                      </span>
+                    </div>
+                    <input
+                      id="drawings"
+                      className="sr-only-file-input"
+                      disabled={busy || !!pending.current}
+                      type="file"
+                      multiple
+                      accept=".pdf,.jpg,.jpeg,.png,.webp"
+                      onChange={(e) => {
+                        addFiles(Array.from(e.target.files || []));
+                        e.target.value = "";
+                      }}
+                    />
+                  </label>
+
+                  {files.length > 0 && (
+                    <div className="uploaded-files-list">
+                      {files.map((f, i) => (
+                        <div className="uploaded-file-pill" key={i}>
+                          <FileText size={18} className="uploaded-file-icon" />
+                          <span className="uploaded-file-name">
+                            {f.name}{" "}
+                            <small>({(f.size / 1024 / 1024).toFixed(1)} MB)</small>
+                          </span>
+                          <button
+                            type="button"
+                            disabled={busy || !!pending.current}
+                            aria-label={"Remove " + f.name}
+                            className="uploaded-file-remove"
+                            onClick={() =>
+                              setFiles(files.filter((_, j) => j !== i))
+                            }
+                          >
+                            <X size={15} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
+
                 <label className="field wide">
-                  Additional message
+                  <span className="field-label">
+                    <span>Additional notes</span>
+                    <span className="field-optional">Optional</span>
+                  </span>
                   <textarea
                     name="message"
                     data-lenis-prevent
                     maxLength={5000}
-                    placeholder="Anything else we should know?"
+                    placeholder="Any site access notes, phasing requirements, or specific questions?"
                   />
                 </label>
               </>
             )}
+
             <label className="hidden-honey" aria-hidden="true">
               Website
               <input name="website" tabIndex={-1} autoComplete="off" />
             </label>
+
             <div className="field wide">
-              <div className="consent">
+              <div className="consent designer-consent">
                 <Checkbox
                   id="consent"
                   checked={consent}
@@ -421,19 +521,20 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
                 <label htmlFor="consent">
                   I agree to the use of my details and documents to respond to
                   this enquiry.{" "}
-                  <a style={{ textDecoration: "underline" }} href="/privacy">
-                    Privacy information
-                  </a>
-                  .
+                  <a href="/privacy">Privacy information</a>.
                 </label>
               </div>
             </div>
           </fieldset>
-          <Turnstile
-            action="quote"
-            onToken={setChallenge}
-            resetKey={challengeReset}
-          />
+
+          <div className="designer-form-security">
+            <Turnstile
+              action="quote"
+              onToken={setChallenge}
+              resetKey={challengeReset}
+            />
+          </div>
+
           {pending.current && !success && (
             <p className="field wide form-note">
               Your submission is in progress. Retry to finish uploading the same
@@ -446,7 +547,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
                   pending.current = null;
                   completedUploads.current.clear();
                   token.current = newId();
-                  uploadSecret.current = newId() + newId();
+                  uploadSecret.current = newId();
                   setChallenge("");
                   setChallengeReset((v) => v + 1);
                   setMessage("Start a new enquiry with the details below.");
@@ -456,6 +557,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
               </button>
             </p>
           )}
+
           {message && (
             <div
               className="field wide form-message error"
@@ -463,7 +565,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
               tabIndex={-1}
               ref={messageRef}
             >
-              {message}
+              <span>{message}</span>
               {!pending.current && (
                 <button
                   type="button"
@@ -477,26 +579,32 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
                     setMessage("");
                   }}
                 >
-                  Start a new enquiry
+                  Reset form
                 </button>
               )}
             </div>
           )}
-          <div className="field wide">
+
+          <div className="designer-form-footer">
             <button
-              className="btn dark"
+              className="btn dark designer-submit-btn"
               disabled={busy || (!challenge && !pending.current)}
               type="submit"
             >
-              {busy
-                ? progress < 100
-                  ? `Sending ${progress}%`
-                  : "Saving your enquiry…"
-                : "Send project enquiry"}
-              <ArrowUpRight />
+              <span>
+                {busy
+                  ? progress < 100
+                    ? `Uploading & Sending (${progress}%)`
+                    : "Saving your enquiry…"
+                  : compact
+                    ? "Send Message & Project Enquiry"
+                    : "Submit Project Quote Request"}
+              </span>
+              <ArrowUpRight aria-hidden="true" />
             </button>
-            <p className="form-note">
-              Your enquiry is saved securely. No marketing subscription.
+            <p className="designer-security-note">
+              <ShieldCheck size={15} aria-hidden="true" />
+              <span>Encrypted &amp; saved privately. Zero spam or marketing lists.</span>
             </p>
           </div>
         </>
