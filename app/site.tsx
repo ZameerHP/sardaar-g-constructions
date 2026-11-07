@@ -42,6 +42,7 @@ import {
   areas,
   steps,
   industries,
+  industryDetails,
   manufacturerCategories,
   formatPhoneDisplay,
   formatPhoneHref,
@@ -434,7 +435,13 @@ function Photo({
         ? 'Custom residence featuring vertical cedar and fiber cement siding installation'
         : name === 'hero-foreground'
           ? 'Contemporary residential exterior with engineered rainscreen and timber soffits'
-          : 'Commercial building facade with dark architectural metal panels';
+          : name === 'service-rainscreen-assembly'
+            ? 'Engineered exterior wall rainscreen assembly with weather-resistive barrier and metal Z-girt strapping'
+            : name === 'service-soffit-fascia'
+              ? 'Wood-grain aluminum soffit overhang with recessed lighting and matte black metal fascia'
+              : name === 'interlude-detail-facade'
+                ? 'Precision architectural transition between vertical timber slats and matte black ribbed metal cladding'
+                : 'Commercial building facade with dark architectural metal panels';
   return (
     <div className={('photo-frame ' + className).trim()}>
       <img
@@ -544,10 +551,10 @@ function Process({ expanded = false }: { expanded?: boolean }) {
 function ProjectCards({ projects }: { projects: RecordData[] }) {
   return (
     <div className="project-grid">
-      {projects.map(p => (
+      {projects.map((p, idx) => (
         <div key={p.id}>
           <a href={'/projects/' + p.slug} className="project-card-link">
-            <div className="photo-frame">
+            <div className="photo-frame project-card-media">
               <img
                 src={p.data.cover}
                 alt={p.data.coverAlt || p.title}
@@ -557,19 +564,29 @@ function ProjectCards({ projects }: { projects: RecordData[] }) {
                 height="900"
                 style={{ objectPosition: p.data.focal || '50% 50%' }}
               />
+              <div className="project-card-badges">
+                <span className="project-sector-pill">
+                  {p.data.type || 'Exterior Cladding'}
+                </span>
+                <span className="project-location-pill">
+                  <MapPin size={12} aria-hidden="true" />
+                  {p.data.location || 'British Columbia'}
+                </span>
+              </div>
             </div>
             <div className="project-info">
               <div>
                 <h3>{p.title}</h3>
+                {p.data.summary && (
+                  <p className="project-card-summary">{p.data.summary}</p>
+                )}
                 <div className="project-meta-pills" aria-label="Project specifications">
-                  <span>{p.data.location || 'British Columbia'}</span>
-                  <span className="meta-dot" aria-hidden="true">·</span>
-                  <span>{p.data.type || 'Exterior Cladding'}</span>
-                  <span className="meta-dot" aria-hidden="true">·</span>
-                  <span>{p.data.materials || 'Engineered Assembly'}</span>
+                  <span>{p.data.materials || 'Engineered Cladding Assembly'}</span>
                 </div>
               </div>
-              <ArrowUpRight aria-hidden="true" />
+              <span className="label gold">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
             </div>
           </a>
         </div>
@@ -883,14 +900,14 @@ export function HomePage({ content }: { content: Content }) {
         </div>
         <div className="architecture-collage">
           <Photo
-            name="timber-home"
+            name="service-rainscreen-assembly"
             className="collage-main"
-            objectPosition="42% 50%"
+            objectPosition="50% 50%"
           />
           <Photo
-            name="seattle-facade"
+            name="service-soffit-fascia"
             className="collage-detail"
-            objectPosition="60% 35%"
+            objectPosition="50% 45%"
           />
           <div className="collage-note">
             <Layers size={24} strokeWidth={1.2} aria-hidden="true" />
@@ -922,16 +939,16 @@ export function HomePage({ content }: { content: Content }) {
           <div className="project-grid">
             <div>
               <a href="/projects" className="project-card-link">
-                <Photo name="seattle-facade" objectPosition="50% 42%" />
+                <Photo name="project-west-van-residence" objectPosition="50% 48%" />
                 <div className="project-info">
                   <div>
                     <h3>Material. Rhythm. Detail.</h3>
                     <div className="project-meta-pills">
-                      <span>Lower Mainland, BC</span>
+                      <span>West Vancouver, BC</span>
                       <span className="meta-dot" aria-hidden="true">·</span>
-                      <span>Multi-Family Exterior</span>
+                      <span>Residential Exterior</span>
                       <span className="meta-dot" aria-hidden="true">·</span>
-                      <span>Metal &amp; Timber Cladding</span>
+                      <span>Longboard &amp; Hardie Panel</span>
                     </div>
                   </div>
                   <span className="label gold">01</span>
@@ -940,7 +957,7 @@ export function HomePage({ content }: { content: Content }) {
             </div>
             <div>
               <a href="/projects" className="project-card-link">
-                <Photo name="black-commercial" objectPosition="50% 48%" />
+                <Photo name="project-richmond-commercial" objectPosition="50% 48%" />
                 <div className="project-info">
                   <div>
                     <h3>A precise exterior.</h3>
@@ -949,7 +966,7 @@ export function HomePage({ content }: { content: Content }) {
                       <span className="meta-dot" aria-hidden="true">·</span>
                       <span>Commercial Envelope</span>
                       <span className="meta-dot" aria-hidden="true">·</span>
-                      <span>Architectural Panel &amp; Rainscreen</span>
+                      <span>Architectural ACM &amp; Rainscreen</span>
                     </div>
                   </div>
                   <span className="label gold">02</span>
@@ -976,8 +993,8 @@ export function HomePage({ content }: { content: Content }) {
 
       <section className="section interlude shell">
         <img
-          src="/images/black-commercial.webp"
-          alt="Close-up architectural detail of dark metal cladding panels and clean exterior transitions"
+          src="/images/interlude-detail-facade.webp"
+          alt="Close-up architectural detail of vertical timber slats meeting dark charcoal ribbed metal cladding panels"
           loading="lazy"
           decoding="async"
           width="1400"
@@ -1166,19 +1183,19 @@ const industryMedia: { src: string; pos: string; alt: string }[] = [
     alt: 'Commercial building envelope featuring dark architectural metal facade systems',
   },
   {
-    src: '/images/hero-foreground.webp',
-    pos: '26% 52%',
-    alt: 'New construction architectural cladding and soffit installation in British Columbia',
+    src: '/images/service-rainscreen-assembly.webp',
+    pos: '50% 48%',
+    alt: 'New construction engineered rainscreen and exterior cladding installation in British Columbia',
   },
 ];
 
 function IndustryBlocks() {
   return (
     <div className="industry-grid">
-      {industries.map(([t, d], i) => {
+      {industryDetails.map((sector, i) => {
         const media = industryMedia[i] || industryMedia[0];
         return (
-          <article key={t} id={t.toLowerCase().replaceAll(' ', '-')}>
+          <article key={sector.id} id={sector.id}>
             <div className="industry-photo">
               <img
                 src={media.src}
@@ -1190,15 +1207,92 @@ function IndustryBlocks() {
                 style={{ objectPosition: media.pos }}
               />
             </div>
-            <span className="label">0{i + 1}</span>
-            <h3>{t}</h3>
-            <p>{d}</p>
-            <TextLink href={'/request-a-quote?type=' + encodeURIComponent(t)}>
-              Discuss your project
+            <span className="label">0{i + 1} · {sector.subtitle}</span>
+            <h3>{sector.title}</h3>
+            <p>{sector.summary}</p>
+            <div className="sector-card-tags">
+              {sector.systems.slice(0, 3).map(sys => (
+                <span key={sys} className="sector-mini-tag">{sys}</span>
+              ))}
+            </div>
+            <TextLink href={'/industries#' + sector.id}>
+              Explore {sector.title.toLowerCase()} scope
             </TextLink>
           </article>
         );
       })}
+    </div>
+  );
+}
+
+function IndustriesShowcase() {
+  return (
+    <div className="sector-dossier-list">
+      {industryDetails.map((sector, i) => (
+        <article
+          key={sector.id}
+          id={sector.id}
+          className={'sector-dossier-card' + (i % 2 === 1 ? ' is-reversed' : '')}
+        >
+          <div className="sector-dossier-media">
+            <img
+              src={sector.image}
+              alt={sector.alt}
+              loading="lazy"
+              decoding="async"
+              width="900"
+              height="640"
+            />
+            <span className="sector-dossier-badge">
+              Sector 0{i + 1} · {sector.title}
+            </span>
+          </div>
+          <div className="sector-dossier-body">
+            <div className="label">0{i + 1} / {sector.subtitle}</div>
+            <h2>{sector.title} Exterior Systems</h2>
+            <p className="sector-dossier-lead">{sector.body}</p>
+
+            <div className="sector-dossier-columns">
+              <div className="sector-scope-box">
+                <h4>Typical Scope &amp; Deliverables</h4>
+                <ul>
+                  {sector.deliverables.map(item => (
+                    <li key={item}>
+                      <CheckCheck size={16} aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="sector-systems-box">
+                <h4>Specified Systems &amp; Assemblies</h4>
+                <div className="sector-system-pills">
+                  {sector.systems.map(sys => (
+                    <span key={sys} className="sector-system-pill">
+                      {sys}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="sector-dossier-actions">
+              <ButtonLink
+                href={'/request-a-quote?type=' + encodeURIComponent(sector.title)}
+              >
+                Request {sector.title} Quote
+              </ButtonLink>
+              <a
+                className="btn outline dark"
+                href={'/projects?type=' + encodeURIComponent(sector.title)}
+              >
+                <span>View {sector.title} Projects</span>
+                <ArrowUpRight aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
     </div>
   );
 }
@@ -1252,24 +1346,151 @@ export function Portfolio({ content }: { content: Content }) {
   }
 
   return (
-    <>
+    <div className="portfolio-showcase">
+      <div className="portfolio-stats-bar" aria-label="Portfolio overview metrics">
+        <div className="portfolio-stat-item">
+          <span className="portfolio-stat-value">
+            {String(content.projects.length).padStart(2, '0')}
+          </span>
+          <span className="portfolio-stat-label">Featured BC Case Studies</span>
+        </div>
+        <div className="portfolio-stat-item">
+          <span className="portfolio-stat-value">Part 5 &amp; 9</span>
+          <span className="portfolio-stat-label">BC Building Code Rainscreen</span>
+        </div>
+        <div className="portfolio-stat-item">
+          <span className="portfolio-stat-value">07+</span>
+          <span className="portfolio-stat-label">Approved Cladding Manufacturers</span>
+        </div>
+        <div className="portfolio-stat-item">
+          <span className="portfolio-stat-value">5 Regions</span>
+          <span className="portfolio-stat-label">Lower Mainland to BC Interior</span>
+        </div>
+      </div>
+
       {content.projects.length > 0 && (
-        <div className="filters" aria-label="Filter projects">
-          {categories.map(c => (
-            <button
-              type="button"
-              className={'filter ' + (filter === c ? 'selected' : '')}
-              key={c}
-              onClick={() => change(c)}
-              aria-pressed={filter === c}
-            >
-              {c}
-            </button>
-          ))}
+        <div className="portfolio-filter-bar">
+          <div className="portfolio-filter-heading">
+            <span className="label">Filter by sector</span>
+            <p>
+              Showing <strong>{filtered.length}</strong> of{' '}
+              <strong>{content.projects.length}</strong> completed &amp; active exterior packages
+            </p>
+          </div>
+          <div className="filters" aria-label="Filter projects">
+            {categories.map(c => {
+              const count =
+                c === 'All'
+                  ? content.projects.length
+                  : content.projects.filter(p => p.data.type === c).length;
+              return (
+                <button
+                  type="button"
+                  className={'filter ' + (filter === c ? 'selected' : '')}
+                  key={c}
+                  onClick={() => change(c)}
+                  aria-pressed={filter === c}
+                >
+                  <span>{c === 'All' ? 'All Projects' : c}</span>
+                  <span className="filter-count">{count}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
+
       {filtered.length ? (
-        <ProjectCards projects={filtered} />
+        <div className="portfolio-case-grid">
+          {filtered.map((p, idx) => (
+            <article key={p.id} className="portfolio-case-card">
+              <a
+                href={'/projects/' + p.slug}
+                className="portfolio-case-media"
+                aria-label={'View case study for ' + p.title}
+              >
+                <img
+                  src={p.data.cover}
+                  alt={p.data.coverAlt || p.title}
+                  loading="lazy"
+                  decoding="async"
+                  width="1200"
+                  height="820"
+                  style={{ objectPosition: p.data.focal || '50% 50%' }}
+                />
+                <div className="portfolio-case-overlays">
+                  <span className="portfolio-sector-badge">
+                    {p.data.type || 'Exterior Cladding'}
+                  </span>
+                  <span className="portfolio-status-badge">
+                    {p.data.status || 'Completed'}
+                    {p.data.year ? ' · ' + p.data.year : ''}
+                  </span>
+                </div>
+                <div className="portfolio-location-strip">
+                  <MapPin size={14} aria-hidden="true" />
+                  <span>{p.data.location || 'British Columbia'}</span>
+                </div>
+              </a>
+
+              <div className="portfolio-case-body">
+                <div className="portfolio-case-kicker">
+                  Case Study {String(idx + 1).padStart(2, '0')}
+                </div>
+                <h3>
+                  <a href={'/projects/' + p.slug}>{p.title}</a>
+                </h3>
+                <p className="portfolio-case-summary">
+                  {p.data.summary || p.data.scope}
+                </p>
+
+                <dl className="case-spec-matrix">
+                  <div className="case-spec-row">
+                    <dt>Primary Cladding</dt>
+                    <dd>{p.data.materials || 'Engineered Cladding System'}</dd>
+                  </div>
+                  {p.data.rainscreen && (
+                    <div className="case-spec-row">
+                      <dt>Rainscreen &amp; WRB</dt>
+                      <dd>{p.data.rainscreen}</dd>
+                    </div>
+                  )}
+                  {p.data.trimSystem && (
+                    <div className="case-spec-row">
+                      <dt>Architectural Details</dt>
+                      <dd>{p.data.trimSystem}</dd>
+                    </div>
+                  )}
+                </dl>
+
+                {Array.isArray(p.data.deliverables) && p.data.deliverables.length > 0 && (
+                  <ul className="case-deliverables-preview">
+                    {p.data.deliverables.slice(0, 2).map((d: string) => (
+                      <li key={d}>
+                        <CheckCheck size={14} aria-hidden="true" />
+                        <span>{d}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <div className="portfolio-case-footer">
+                  <a className="btn dark" href={'/projects/' + p.slug}>
+                    <span>View Case Study</span>
+                    <ArrowUpRight aria-hidden="true" />
+                  </a>
+                  <a
+                    className="portfolio-quote-shortcut"
+                    href={'/request-a-quote?project=' + encodeURIComponent(p.title)}
+                  >
+                    <span>Discuss similar scope</span>
+                    <ArrowUpRight size={15} aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
       ) : (
         <div className="empty-state">
           <div className="label">Our portfolio</div>
@@ -1303,7 +1524,19 @@ export function Portfolio({ content }: { content: Content }) {
           )}
         </div>
       )}
-    </>
+
+      <InteractiveBeforeAfter
+        pairs={content.projects
+          .filter(p => p.data.before && p.data.after)
+          .map(p => ({
+            title: p.title,
+            before: p.data.before,
+            after: p.data.after,
+            beforeAlt: p.data.beforeAlt || p.title + ' before',
+            afterAlt: p.data.afterAlt || p.title + ' after',
+          }))}
+      />
+    </div>
   );
 }
 
@@ -1745,10 +1978,11 @@ export function ContentPage({
 
         {path === 'industries' && (
           <>
-            <IndustryBlocks />
+            <IndustriesShowcase />
             <div className="intro" style={{ marginTop: 70 }}>
-              <Photo name="seattle-facade" />
+              <Photo name="interlude-detail-facade" />
               <div>
+                <div className="label">Integrated Envelope Delivery</div>
                 <h2>A partner for the whole exterior.</h2>
                 <p>
                   Builders and general contractors need a team that understands
@@ -1756,6 +1990,11 @@ export function ContentPage({
                   the exterior as one connected scope, with care at every
                   transition.
                 </p>
+                <div style={{ marginTop: 24 }}>
+                  <ButtonLink href="/request-a-quote">
+                    Send Drawings for Estimate
+                  </ButtonLink>
+                </div>
               </div>
             </div>
           </>
@@ -2129,14 +2368,15 @@ export function ContentPage({
         )}
 
         {record?.kind === 'project' && (
-          <>
+          <div className="project-case-detail">
             <div className="project-meta">
               {[
                 ['Location', record.data.location],
-                ['Project type', record.data.type],
-                ['Materials', record.data.materials],
+                ['Sector', record.data.type],
+                ['Primary Cladding', record.data.materials],
+                ['Rainscreen & WRB', record.data.rainscreen],
                 ['Status', record.data.status],
-                ['Year', record.data.year],
+                ['Completion', record.data.year],
               ]
                 .filter(([, v]) => v)
                 .map(([k, v]) => (
@@ -2147,23 +2387,56 @@ export function ContentPage({
                 ))}
             </div>
             {record.data.cover && (
-              <img
-                src={record.data.cover}
-                alt={record.data.coverAlt || record.title}
-                loading="lazy"
-                decoding="async"
-                style={{
-                  maxHeight: 700,
-                  objectPosition: record.data.focal || '50% 50%',
-                }}
-              />
+              <div className="project-detail-hero-frame">
+                <img
+                  src={record.data.cover}
+                  alt={record.data.coverAlt || record.title}
+                  loading="lazy"
+                  decoding="async"
+                  style={{
+                    maxHeight: 680,
+                    width: '100%',
+                    objectFit: 'cover',
+                    objectPosition: record.data.focal || '50% 50%',
+                  }}
+                />
+              </div>
             )}
-            <div className="content-prose" style={{ marginBlock: 50 }}>
-              <h2>Scope of work</h2>
-              <p>{record.data.scope}</p>
+            <div className="project-detail-scope-grid">
+              <div className="project-detail-prose">
+                <div className="label">01 / Execution Overview</div>
+                <h2>Scope of work</h2>
+                <p>{record.data.scope}</p>
+                {record.data.trimSystem && (
+                  <p>
+                    <strong>Architectural Trim &amp; Soffit Package:</strong>{' '}
+                    {record.data.trimSystem}
+                  </p>
+                )}
+              </div>
+              {Array.isArray(record.data.deliverables) &&
+                record.data.deliverables.length > 0 && (
+                  <div className="project-detail-deliverables">
+                    <div className="label">02 / Key Deliverables</div>
+                    <h3>Completed Envelope Package</h3>
+                    <ul>
+                      {record.data.deliverables.map((d: string) => (
+                        <li key={d}>
+                          <CheckCheck size={16} aria-hidden="true" />
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
             </div>
             {record.data.media?.length > 0 && (
-              <Gallery media={record.data.media} />
+              <div style={{ marginTop: 48 }}>
+                <div className="label" style={{ marginBottom: 14 }}>
+                  03 / Project Photography
+                </div>
+                <Gallery media={record.data.media} />
+              </div>
             )}
             {record.data.before && record.data.after && (
               <BeforeAfter
@@ -2182,7 +2455,7 @@ export function ContentPage({
                 style={{ width: '100%', marginTop: 30 }}
               />
             )}
-            <div style={{ marginTop: 40 }}>
+            <div className="project-detail-actions">
               <ButtonLink
                 href={
                   '/request-a-quote?project=' +
@@ -2191,8 +2464,12 @@ export function ContentPage({
               >
                 Discuss a similar project
               </ButtonLink>
+              <a className="btn outline dark" href="/projects">
+                <span>Back to All Projects</span>
+                <ArrowUpRight aria-hidden="true" />
+              </a>
             </div>
-          </>
+          </div>
         )}
       </section>
     </Frame>

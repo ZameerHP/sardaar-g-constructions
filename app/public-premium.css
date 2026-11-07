@@ -2993,6 +2993,650 @@ html.lenis body {
 }
 
 /* ==========================================================================
+   HOME FEATURED PROJECT BADGES & SECTOR TAGS
+   ========================================================================== */
+.public-site .project-card-media {
+  position: relative;
+}
+
+.public-site .project-card-badges {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.public-site .project-sector-pill,
+.public-site .project-location-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+.public-site .project-sector-pill {
+  background: rgba(11, 29, 24, 0.86);
+  border: 1px solid rgba(228, 199, 135, 0.42);
+  color: var(--gold-bright);
+}
+
+.public-site .project-location-pill {
+  background: rgba(11, 29, 24, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f4f7ec;
+}
+
+.public-site .project-card-summary {
+  margin: 8px 0 10px !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  color: rgba(244, 247, 236, 0.8) !important;
+}
+
+.public-site .sector-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.public-site .sector-mini-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  color: var(--forest);
+}
+
+/* ==========================================================================
+   INDUSTRIES PAGE — EXECUTIVE SECTOR DOSSIER SHOWCASE
+   ========================================================================== */
+.public-site .sector-dossier-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4vw, 48px);
+}
+
+.public-site .sector-dossier-card {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: clamp(28px, 4vw, 52px);
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  padding: clamp(22px, 3.2vw, 38px);
+  box-shadow: var(--shadow-soft);
+}
+
+.public-site .sector-dossier-card.is-reversed {
+  grid-template-columns: 1.08fr 0.92fr;
+}
+
+.public-site .sector-dossier-card.is-reversed .sector-dossier-media {
+  order: 2;
+}
+
+.public-site .sector-dossier-card.is-reversed .sector-dossier-body {
+  order: 1;
+}
+
+.public-site .sector-dossier-media {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  height: clamp(280px, 34vw, 440px);
+  background: var(--forest);
+}
+
+.public-site .sector-dossier-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.public-site .sector-dossier-card:hover .sector-dossier-media img {
+  transform: scale(1.03);
+}
+
+.public-site .sector-dossier-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(11, 29, 24, 0.88);
+  border: 1px solid rgba(228, 199, 135, 0.42);
+  color: var(--gold-bright);
+  font-family: var(--font-cond), 'Arial Narrow', Arial, sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  word-spacing: 0.16em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
+.public-site .sector-dossier-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.public-site .sector-dossier-body h2 {
+  font-size: clamp(26px, 2.8vw, 38px);
+  line-height: 1.12;
+  color: var(--forest);
+  margin: 0;
+}
+
+.public-site .sector-dossier-lead {
+  font-size: 15.5px;
+  line-height: 1.68;
+  color: var(--quiet);
+  margin: 0;
+}
+
+.public-site .sector-dossier-columns {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+
+.public-site .sector-scope-box h4,
+.public-site .sector-systems-box h4 {
+  font-family: var(--font-cond), 'Arial Narrow', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  word-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-on-light);
+  margin: 0 0 10px;
+}
+
+.public-site .sector-scope-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.public-site .sector-scope-box li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.public-site .sector-scope-box li svg {
+  color: var(--forest);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.public-site .sector-system-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.public-site .sector-system-pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(16, 42, 35, 0.14);
+  color: var(--forest);
+}
+
+.public-site .sector-dossier-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+/* ==========================================================================
+   PROJECTS PAGE — ARCHITECTURAL CASE STUDY PORTFOLIO
+   ========================================================================== */
+.public-site .portfolio-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 44px);
+}
+
+.public-site .portfolio-stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  padding: clamp(20px, 2.8vw, 30px);
+  border-radius: var(--radius-panel);
+  background:
+    radial-gradient(circle at 90% 0%, rgba(228, 199, 135, 0.14), transparent 55%),
+    linear-gradient(165deg, #102a23 0%, #091814 100%);
+  border: 1px solid rgba(228, 199, 135, 0.24);
+  color: #f4f7ec;
+}
+
+.public-site .portfolio-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-inline: 12px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.public-site .portfolio-stat-item:last-child {
+  border-right: 0;
+}
+
+.public-site .portfolio-stat-value {
+  font-family: var(--font-cond), 'Arial Narrow', Arial, sans-serif;
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--gold-bright);
+  line-height: 1.05;
+}
+
+.public-site .portfolio-stat-label {
+  font-size: 12.5px;
+  color: #cbd8d0;
+  line-height: 1.35;
+}
+
+.public-site .portfolio-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 18px 22px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.public-site .portfolio-filter-heading .label {
+  margin-bottom: 4px;
+}
+
+.public-site .portfolio-filter-heading p {
+  font-size: 13.5px;
+  color: var(--quiet);
+  margin: 0;
+}
+
+.public-site .portfolio-filter-bar .filters {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.public-site .filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.public-site .filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding-inline: 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(16, 42, 35, 0.08);
+  color: inherit;
+}
+
+.public-site .filter.selected .filter-count {
+  background: rgba(228, 199, 135, 0.22);
+  color: var(--gold-bright);
+}
+
+.public-site .portfolio-case-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 36px);
+}
+
+.public-site .portfolio-case-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+
+.public-site .portfolio-case-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 24px 52px rgba(8, 22, 18, 0.11);
+}
+
+.public-site .portfolio-case-media {
+  position: relative;
+  display: block;
+  height: clamp(240px, 27vw, 340px);
+  overflow: hidden;
+  background: var(--forest);
+}
+
+.public-site .portfolio-case-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.public-site .portfolio-case-card:hover .portfolio-case-media img {
+  transform: scale(1.04);
+}
+
+.public-site .portfolio-case-overlays {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 2;
+}
+
+.public-site .portfolio-sector-badge,
+.public-site .portfolio-status-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-family: var(--font-cond), 'Arial Narrow', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  word-spacing: 0.15em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+.public-site .portfolio-sector-badge {
+  background: rgba(11, 29, 24, 0.88);
+  border: 1px solid rgba(228, 199, 135, 0.45);
+  color: var(--gold-bright);
+}
+
+.public-site .portfolio-status-badge {
+  background: rgba(11, 29, 24, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.public-site .portfolio-location-strip {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(11, 29, 24, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f4f7ec;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+
+.public-site .portfolio-location-strip svg {
+  color: var(--gold-bright);
+}
+
+.public-site .portfolio-case-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(22px, 3vw, 32px);
+  flex: 1;
+}
+
+.public-site .portfolio-case-kicker {
+  font-family: var(--font-cond), 'Arial Narrow', Arial, sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  word-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-on-light);
+}
+
+.public-site .portfolio-case-body h3 {
+  font-size: clamp(21px, 2.2vw, 26px);
+  line-height: 1.2;
+  color: var(--forest);
+  margin: 0;
+}
+
+.public-site .portfolio-case-body h3 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.public-site .portfolio-case-body h3 a:hover {
+  color: var(--gold-on-light);
+}
+
+.public-site .portfolio-case-summary {
+  font-size: 14.5px;
+  line-height: 1.62;
+  color: var(--quiet);
+  margin: 0;
+}
+
+.public-site .case-spec-matrix {
+  margin: 4px 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f6f8f3;
+  border: 1px solid rgba(16, 42, 35, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.public-site .case-spec-row {
+  display: grid;
+  grid-template-columns: 135px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 13px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(16, 42, 35, 0.1);
+}
+
+.public-site .case-spec-row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.public-site .case-spec-row dt {
+  font-family: var(--font-cond), 'Arial Narrow', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  word-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-on-light);
+}
+
+.public-site .case-spec-row dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.public-site .case-deliverables-preview {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.public-site .case-deliverables-preview li {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--quiet);
+  line-height: 1.45;
+}
+
+.public-site .case-deliverables-preview li svg {
+  color: var(--forest);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.public-site .portfolio-case-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.public-site .portfolio-quote-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--forest);
+  text-decoration: none;
+}
+
+.public-site .portfolio-quote-shortcut:hover {
+  color: var(--gold-on-light);
+}
+
+/* Individual Project Case Study Detail Page */
+.public-site .project-detail-hero-frame {
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  margin-block: 28px 40px;
+}
+
+.public-site .project-detail-scope-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(24px, 3.5vw, 44px);
+  align-items: start;
+  margin-block: 36px;
+}
+
+.public-site .project-detail-prose h2 {
+  font-size: clamp(26px, 3vw, 38px);
+  color: var(--forest);
+  margin-bottom: 14px;
+}
+
+.public-site .project-detail-prose p {
+  font-size: 15.5px;
+  line-height: 1.72;
+  color: var(--quiet);
+  margin-bottom: 14px;
+}
+
+.public-site .project-detail-deliverables {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: clamp(22px, 3vw, 32px);
+}
+
+.public-site .project-detail-deliverables h3 {
+  font-size: 20px;
+  color: var(--forest);
+  margin: 0 0 16px;
+}
+
+.public-site .project-detail-deliverables ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.public-site .project-detail-deliverables li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.public-site .project-detail-deliverables li svg {
+  color: var(--forest);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.public-site .project-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 40px;
+}
+
+/* ==========================================================================
    RESPONSIVE BREAKPOINTS (1100px / 800px / 768px / 640px / 390px / 320px)
    ========================================================================== */
 @media (max-width: 1100px) {
@@ -3028,6 +3672,25 @@ html.lenis body {
   .public-site .contact-cards-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .public-site .sector-dossier-card,
+  .public-site .sector-dossier-card.is-reversed {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .public-site .sector-dossier-card.is-reversed .sector-dossier-media,
+  .public-site .sector-dossier-card.is-reversed .sector-dossier-body {
+    order: initial;
+  }
+  .public-site .portfolio-stats-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+  .public-site .portfolio-stat-item:nth-child(2) {
+    border-right: 0;
+  }
+  .public-site .portfolio-case-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 900px) {
@@ -3036,6 +3699,37 @@ html.lenis body {
   }
   .public-site .warranty-support-wrap {
     grid-template-columns: 1fr;
+  }
+  .public-site .sector-dossier-columns {
+    grid-template-columns: 1fr;
+  }
+  .public-site .project-detail-scope-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .public-site .portfolio-stats-bar {
+    grid-template-columns: 1fr 1fr;
+    padding: 18px 14px;
+    gap: 14px;
+  }
+  .public-site .portfolio-stat-item {
+    padding-inline: 8px;
+  }
+  .public-site .case-spec-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .public-site .portfolio-case-footer,
+  .public-site .sector-dossier-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .public-site .portfolio-case-footer .btn,
+  .public-site .sector-dossier-actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 

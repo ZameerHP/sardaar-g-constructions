@@ -4,6 +4,7 @@ import { supabaseConfig } from "./supabase/config";
 import {
   services,
   manufacturers,
+  defaultProjects,
   formatPhoneDisplay,
   type Content,
   type RecordData,
@@ -20,7 +21,7 @@ export const getContent = cache(async (): Promise<Content> => {
       service_area: "British Columbia, Canada",
     },
     services,
-    projects: [],
+    projects: defaultProjects,
     articles: [],
     testimonials: [],
     manufacturers,
@@ -77,19 +78,23 @@ export const getContent = cache(async (): Promise<Content> => {
     return {
       settings: mergedSettings,
       services: svc.length
-        ? svc.map((s: any) => ({
-            id: s.slug,
-            title: s.title,
-            summary: s.summary,
-            body: s.description,
-            materials: s.bullet_points.join(", "),
-            bulletPoints: s.bullet_points,
-            image: image(s.image_id) || s.fallback_image,
-            imageAlt: s.image_alt,
-            seoTitle: s.seo_title,
-            seoDescription: s.seo_description,
-            ogImage: image(s.og_image_id) || image(s.image_id),
-          }))
+        ? svc.map((s: any) => {
+            const localSvc = services.find((ls) => ls.id === s.slug);
+            return {
+              id: s.slug,
+              title: s.title,
+              summary: s.summary,
+              body: s.description,
+              materials: s.bullet_points.join(", "),
+              bulletPoints: s.bullet_points,
+              image:
+                image(s.image_id) || localSvc?.image || s.fallback_image,
+              imageAlt: s.image_alt,
+              seoTitle: s.seo_title,
+              seoDescription: s.seo_description,
+              ogImage: image(s.og_image_id) || image(s.image_id),
+            };
+          })
         : services,
       manufacturers: brands.length
         ? brands.map((b: any) => b.brand_name)
@@ -100,38 +105,40 @@ export const getContent = cache(async (): Promise<Content> => {
             logo: image(b.logo_id),
           }))
         : undefined,
-      projects: projects.map((p: any): RecordData => ({
-        id: p.id,
-        kind: "project",
-        slug: p.slug,
-        title: p.title,
-        published: true,
-        data: {
-          location: p.location,
-          type: p.project_type,
-          scope: p.scope,
-          materials: p.materials,
-          status: p.status,
-          featured: p.featured,
-          cover: image(p.featured_image_id),
-          coverAlt: p.featured_image_alt,
-          before: image(p.before_image_id),
-          beforeAlt: p.before_image_alt,
-          afterAlt: p.after_image_alt,
-          after: image(p.after_image_id),
-          seoTitle: p.seo_title,
-          seoDescription: p.seo_description,
-          ogImage: image(p.og_image_id) || image(p.featured_image_id),
-          updatedAt: p.updated_at,
-          media: p.images
-            .sort((a: any, b: any) => a.display_order - b.display_order)
-            .map((i: any) => ({
-              url: image(i.asset_id),
-              alt: i.alt_text,
-              caption: i.caption,
-            })),
-        },
-      })),
+      projects: projects.length
+        ? projects.map((p: any): RecordData => ({
+            id: p.id,
+            kind: "project",
+            slug: p.slug,
+            title: p.title,
+            published: true,
+            data: {
+              location: p.location,
+              type: p.project_type,
+              scope: p.scope,
+              materials: p.materials,
+              status: p.status,
+              featured: p.featured,
+              cover: image(p.featured_image_id),
+              coverAlt: p.featured_image_alt,
+              before: image(p.before_image_id),
+              beforeAlt: p.before_image_alt,
+              afterAlt: p.after_image_alt,
+              after: image(p.after_image_id),
+              seoTitle: p.seo_title,
+              seoDescription: p.seo_description,
+              ogImage: image(p.og_image_id) || image(p.featured_image_id),
+              updatedAt: p.updated_at,
+              media: p.images
+                .sort((a: any, b: any) => a.display_order - b.display_order)
+                .map((i: any) => ({
+                  url: image(i.asset_id),
+                  alt: i.alt_text,
+                  caption: i.caption,
+                })),
+            },
+          }))
+        : defaultProjects,
       articles: posts.map((p: any) => ({
         id: p.id,
         kind: "article",
