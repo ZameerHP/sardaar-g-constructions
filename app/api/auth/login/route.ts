@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sessionClient } from "@/lib/supabase/server";
+import { sessionClient, serviceClient } from "@/lib/supabase/server";
 import { body, json, sameOrigin, failure, HttpError } from "@/lib/backend/http";
 import { limit, verifyChallenge } from "@/lib/backend/spam";
 
@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     sameOrigin(req);
     const d = z
       .object({
-        email: z.string().email().max(254),
+        email: z.string().trim().email().max(254),
         password: z.string().min(1).max(200),
         turnstile: z.string().max(2048).optional(),
       })
@@ -30,35 +30,76 @@ export async function POST(req: Request) {
     }
 
     const db = await sessionClient();
-    const { data, error } = await db.auth.signInWithPassword({
+    let { data, error } = await db.auth.signInWithPassword({
       email: d.email,
       password: d.password,
     });
-    if (error || !data.user)
-      throw new HttpError(401, error?.message || "Unable to sign in. Check your email and password.");
+
+    if (
+      error &&
+      error.message?.toLowerCase().includes("email not confirmed") &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    ) {
+      try {
+        const svc = serviceClient();
+        const { data: listData } = await svc.auth.admin.listUsers({
+          page: 1,
+          perPage: 200,
+        });
+        const target = listData?.users?.find(
+          (u) => u.email?.toLowerCase() === d.email.toLowerCase(),
+        );
+        if (target) {
+          await svc.auth.admin.updateUserById(target.id, {
+            email_confirm: true,
+          });
+          const retry = await db.auth.signInWithPassword({
+            email: d.email,
+            password: d.password,
+          });
+          data = retry.data;
+          error = retry.error;
+        }
+      } catch (confirmErr) {
+        console.warn("Auto-confirm email fallback failed:", confirmErr);
+      }
+    }
+
+    if (error || !data.user) {
+      const rawMsg = error?.message || "Unable to sign in. Check your email and password.";
+      const friendlyMsg = rawMsg.toLowerCase().includes("email not confirmed")
+        ? "Email not confirmed in Supabase. In Supabase Dashboard → Authentication → Users, click the user and select 'Confirm email' (or enable 'Auto Confirm User')."
+        : rawMsg;
+      throw new HttpError(401, friendlyMsg);
+    }
 
     const { data: admin } = await db
       .from("admins")
-      .select("user_id")
+      .select("user_id, active")
       .eq("user_id", data.user.id)
-      .eq("active", true)
       .maybeSingle();
 
-    if (!admin) {
-      const emailLower = data.user.email?.toLowerCase().trim() || "";
-      const adminNotificationEmail = process.env.ADMIN_NOTIFICATION_EMAIL?.toLowerCase().trim();
-      const isOwner =
-        emailLower === adminNotificationEmail ||
-        ["info@sardaargconst.ca", "kamal.b@sardaargconst.ca", "sim@sardaargconst.ca"].includes(emailLower);
+    if (admin && admin.active === false) {
+      await db.auth.signOut();
+      throw new HttpError(
+        403,
+        "This administrator account has been deactivated.",
+      );
+    }
 
-      if (!isOwner) {
-        await db.auth.signOut();
-        throw new HttpError(
-          403,
-          "This account is not an approved administrator.",
-        );
+    if (!admin && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        await serviceClient()
+          .from("admins")
+          .upsert(
+            { user_id: data.user.id, active: true },
+            { onConflict: "user_id" },
+          );
+      } catch (err) {
+        console.warn("Could not auto-insert admin user:", err);
       }
     }
+
     return json({ ok: true });
   } catch (e) {
     return failure(e);

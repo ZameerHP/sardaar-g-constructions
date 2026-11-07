@@ -6,7 +6,6 @@ export function LoginForm() {
   const [reset, setReset] = useState(0);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const hasTurnstile = typeof window !== "undefined" && Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
   return (
     <form
       onSubmit={async (e) => {
@@ -19,8 +18,8 @@ export function LoginForm() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              email: f.get("email"),
-              password: f.get("password"),
+              email: String(f.get("email") || "").trim(),
+              password: String(f.get("password") || ""),
               turnstile: token || undefined,
             }),
           });
@@ -55,7 +54,7 @@ export function LoginForm() {
           {error}
         </p>
       )}
-      <button className="btn dark" disabled={busy || (hasTurnstile && !token)}>
+      <button className="btn dark" type="submit" disabled={busy}>
         {busy ? "Signing in…" : "Sign in"}
       </button>
       <p className="form-note">

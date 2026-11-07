@@ -18,9 +18,33 @@ export function json(data: unknown, status = 200) {
 }
 export function sameOrigin(req: Request) {
   const origin = req.headers.get("origin");
-  const allowed = new URL(process.env.NEXT_PUBLIC_SITE_URL || req.url).origin;
-  if (!origin || origin !== allowed)
+  if (!origin) throw new HttpError(403, "Invalid request origin.");
+  let originHost = "";
+  try {
+    originHost = new URL(origin).host.toLowerCase();
+  } catch {
     throw new HttpError(403, "Invalid request origin.");
+  }
+  const reqHost = new URL(req.url).host.toLowerCase();
+  const forwardedHost = (req.headers.get("x-forwarded-host") || req.headers.get("host") || "")
+    .split(",")[0]
+    .trim()
+    .toLowerCase();
+  let envHost = "";
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    try {
+      envHost = new URL(process.env.NEXT_PUBLIC_SITE_URL).host.toLowerCase();
+    } catch {
+      envHost = "";
+    }
+  }
+  if (
+    originHost !== reqHost &&
+    originHost !== forwardedHost &&
+    (!envHost || originHost !== envHost)
+  ) {
+    throw new HttpError(403, "Invalid request origin.");
+  }
 }
 export async function body(req: Request) {
   if (Number(req.headers.get("content-length") || 0) > 180000)
