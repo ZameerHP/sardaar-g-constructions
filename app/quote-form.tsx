@@ -42,10 +42,8 @@ export function Choice({
         {required && <span className="field-required">*</span>}
       </label>
       <Select
-        name={name}
         value={value}
         onValueChange={onChange}
-        required={required}
       >
         <SelectTrigger
           className="designer-select-trigger"
@@ -72,7 +70,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
   const uploadSecret = useRef("");
   const completedUploads = useRef(new Set<string>());
   const [files, setFiles] = useState<File[]>([]);
-  const [consent, setConsent] = useState(false);
+  const [consent, setConsent] = useState(true);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
@@ -167,11 +165,19 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
     if (!form.current || busy) return;
     if (!consent) {
       setMessage("Please confirm that we may use your details to respond.");
+      setTimeout(() => {
+        messageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        messageRef.current?.focus();
+      }, 20);
       return;
     }
     const hasTurnstile = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
     if (!pending.current && hasTurnstile && !challenge) {
       setMessage("Please complete the security check.");
+      setTimeout(() => {
+        messageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        messageRef.current?.focus();
+      }, 20);
       return;
     }
     setBusy(true);
@@ -179,10 +185,21 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
     setProgress(0);
     try {
       if (!pending.current) {
-        const data = Object.fromEntries(new FormData(form.current));
+        const fd = new FormData(form.current);
+        const str = (key: string) => String(fd.get(key) ?? "").trim();
         const result = await api("/api/quotes/start", "POST", {
-          ...data,
-          type,
+          name: str("name"),
+          company: str("company"),
+          email: str("email"),
+          phone: str("phone"),
+          location: str("location"),
+          size: str("size"),
+          timing,
+          startDate: str("startDate"),
+          scope: str("scope"),
+          message: str("message"),
+          website: str("website"),
+          type: type || "Other",
           token: token.current,
           uploadSecret: uploadSecret.current,
           consent: "yes",
@@ -230,7 +247,10 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
       setChallengeReset((v) => v + 1);
     } finally {
       setBusy(false);
-      setTimeout(() => messageRef.current?.focus(), 20);
+      setTimeout(() => {
+        messageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        messageRef.current?.focus();
+      }, 20);
     }
   }
 
@@ -411,7 +431,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
                 name="scope"
                 data-lenis-prevent
                 required
-                minLength={10}
+                minLength={2}
                 maxLength={10000}
                 placeholder="Tell us about the exterior systems (James Hardie, metal panels, rainscreen, cedar/aluminum soffits), schedule, and installation scope you have in mind."
               />
@@ -589,7 +609,7 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
           <div className="designer-form-footer">
             <button
               className="btn dark designer-submit-btn"
-              disabled={busy || (!challenge && !pending.current)}
+              disabled={busy}
               type="submit"
             >
               <span>

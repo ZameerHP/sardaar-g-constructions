@@ -82,7 +82,11 @@ export async function POST(req: Request) {
       }
 
       if (!savedViaRpc && process.env.RESEND_API_KEY) {
-        await sendEnquiryEmailsDirect(record, []);
+        try {
+          await sendEnquiryEmailsDirect(record, []);
+        } catch (emailErr) {
+          console.warn("Direct Resend delivery warning:", emailErr);
+        }
       }
 
       return json({

@@ -198,15 +198,18 @@ export const quoteSchema = z
       .max(35)
       .regex(/^[+\d\s().-]+$/),
     location: z.string().trim().min(1).max(180),
-    type: z.enum([
-      "Residential",
-      "Multi-Family",
-      "Commercial",
-      "New Construction",
-      "Exterior Renovation",
-      "Other",
-    ]),
-    scope: z.string().trim().min(10).max(10000),
+    type: z.preprocess(
+      (v) => (typeof v === "string" && v.trim() ? v.trim() : "Other"),
+      z.enum([
+        "Residential",
+        "Multi-Family",
+        "Commercial",
+        "New Construction",
+        "Exterior Renovation",
+        "Other",
+      ]),
+    ),
+    scope: z.string().trim().min(2).max(10000),
     size: str(180),
     timing: str(50),
     startDate: z

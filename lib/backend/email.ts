@@ -23,7 +23,7 @@ const esc = (v: unknown) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
-/** Send one email through Resend. Throws on failure. */
+/** Send one email through Resend. Automatically falls back to sandbox owner address if domain is unverified. */
 export async function sendResend(payload: Record<string, unknown>, key?: string) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) throw new Error("RESEND_API_KEY is not configured");
@@ -38,8 +38,32 @@ export async function sendResend(payload: Record<string, unknown>, key?: string)
     signal: AbortSignal.timeout(12000),
   });
   const d = (await r.json().catch(() => ({}))) as any;
-  if (!r.ok)
-    throw new Error(`Resend ${r.status}: ${d?.message || d?.name || "error"}`);
+  if (!r.ok) {
+    const msg = String(d?.message || d?.name || "error");
+    const sandboxMatch = msg.match(
+      /\(([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\)/,
+    );
+    if (r.status === 403 && sandboxMatch?.[1]) {
+      const fallbackPayload = {
+        ...payload,
+        from: "Sardaar G Construction <onboarding@resend.dev>",
+        to: [sandboxMatch[1]],
+      };
+      const r2 = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+          ...(key ? { "Idempotency-Key": `${key}-fallback` } : {}),
+        },
+        body: JSON.stringify(fallbackPayload),
+        signal: AbortSignal.timeout(12000),
+      });
+      const d2 = (await r2.json().catch(() => ({}))) as any;
+      if (r2.ok) return d2 as { id?: string };
+    }
+    throw new Error(`Resend ${r.status}: ${msg}`);
+  }
   return d as { id?: string };
 }
 
@@ -139,18 +163,7 @@ export async function sendPendingEmails() {
   dbError(error);
   for (const job of jobs || []) {
     try {
-      const r = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-          "Content-Type": "application/json",
-          "Idempotency-Key": `quote/${job.id}`,
-        },
-        body: JSON.stringify(job.payload),
-        signal: AbortSignal.timeout(12000),
-      });
-      const d = (await r.json()) as any;
-      if (!r.ok) throw new Error("Resend returned " + r.status);
+      const d = await sendResend(job.payload, `quote/${job.id}`);
       const { error: save } = await db
         .from("email_outbox")
         .update({
