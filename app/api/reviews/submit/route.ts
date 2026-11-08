@@ -3,6 +3,7 @@ import { serviceClient } from "@/lib/supabase/server";
 import { supabaseConfig } from "@/lib/supabase/config";
 import { body, json, failure, sameOrigin, HttpError } from "@/lib/backend/http";
 import { limit, verifyChallenge } from "@/lib/backend/spam";
+import { emailSender, emailRecipients, sendResend } from "@/lib/backend/email";
 
 const reviewSchema = z.object({
   client_name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
       }
     }
 
-    if (supabaseConfig()) {
+    if (supabaseConfig() && process.env.SUPABASE_SERVICE_ROLE_KEY) {
       try {
         const sClient = serviceClient();
         const { error } = await sClient.from("testimonials").insert({
@@ -51,11 +52,22 @@ export async function POST(req: Request) {
 
         if (error) {
           console.error("Error inserting review:", error);
-          throw new HttpError(500, "Unable to save your review at this time.");
         }
       } catch (e: any) {
-        if (e instanceof HttpError) throw e;
         console.error("Database error saving review:", e);
+      }
+    }
+
+    if (process.env.RESEND_API_KEY) {
+      try {
+        await sendResend({
+          from: emailSender(),
+          to: emailRecipients(),
+          subject: `New ${data.rating}★ Client Review from ${data.client_name} — Sardaar G Construction`,
+          text: `Client: ${data.client_name}\nCompany: ${data.company || "Not supplied"}\nProject Type: ${data.project_type || "Not supplied"}\nRating: ${data.rating} / 5 Stars\n\nReview:\n${data.review}`,
+        });
+      } catch (mailErr) {
+        console.warn("Review email notification warning:", mailErr);
       }
     }
 

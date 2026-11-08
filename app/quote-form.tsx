@@ -169,7 +169,8 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
       setMessage("Please confirm that we may use your details to respond.");
       return;
     }
-    if (!pending.current && !challenge) {
+    const hasTurnstile = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+    if (!pending.current && hasTurnstile && !challenge) {
       setMessage("Please complete the security check.");
       return;
     }

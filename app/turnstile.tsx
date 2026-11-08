@@ -66,15 +66,10 @@ export function Turnstile({
       if (id) window.turnstile?.remove(id);
     };
   }, [action, sitekey, resetKey]);
+  if (!sitekey) return null;
   return (
     <div className="field wide">
       <div ref={ref} />
-      {!sitekey && (
-        <p className="form-note">
-          Online enquiries will be available once the security check is
-          configured.
-        </p>
-      )}
     </div>
   );
 }

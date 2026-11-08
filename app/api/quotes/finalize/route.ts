@@ -9,7 +9,11 @@ import {
   HttpError,
 } from "@/lib/backend/http";
 import { verifyStoredFile, hash } from "@/lib/backend/storage";
-import { emailPayloads, sendPendingEmails } from "@/lib/backend/email";
+import {
+  emailPayloads,
+  sendPendingEmails,
+  sendEnquiryEmailsDirect,
+} from "@/lib/backend/email";
 export const maxDuration = 60;
 export async function POST(req: Request) {
   try {
@@ -59,7 +63,13 @@ export async function POST(req: Request) {
     try {
       await sendPendingEmails();
     } catch {
-      console.error("Email queue will retry");
+      if (process.env.RESEND_API_KEY) {
+        try {
+          await sendEnquiryEmailsDirect(q, q.files);
+        } catch (err) {
+          console.error("Direct email fallback error:", err);
+        }
+      }
     }
     return json(
       {

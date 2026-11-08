@@ -227,7 +227,7 @@ export const quoteSchema = z
     token: uuid,
     website: z.literal("").default(""),
     source: z.enum(["quote", "contact"]).default("quote"),
-    turnstile: z.string().min(1).max(2048),
+    turnstile: z.string().max(2048).optional().default(""),
     uploadSecret: z.string().min(60).max(100),
     files: z.array(fileSchema).max(6).default([]),
   })
