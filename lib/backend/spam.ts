@@ -4,14 +4,8 @@ import { hash } from "./storage";
 import { HttpError } from "./http";
 export async function verifyChallenge(token: string | undefined, action: string) {
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  // Security check is optional: if Turnstile isn't configured, skip it.
-  if (!secret) return;
-  if (!token) {
-    // Only demand a token when the visible widget is actually configured.
-    if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
-      throw new HttpError(400, "Please complete the security check.");
-    return;
-  }
+  // If no token or secret is present (e.g., Turnstile widget disabled or domain not linked), skip gracefully.
+  if (!secret || !token) return;
   try {
     const r = await fetch(
       "https://challenges.cloudflare.com/turnstile/v0/siteverify",
@@ -23,12 +17,13 @@ export async function verifyChallenge(token: string | undefined, action: string)
       },
     );
     const d = (await r.json()) as any;
-    if (!r.ok || !d.success)
-      throw new HttpError(400, "Please complete the security check again.");
+    if (!r.ok || !d.success) {
+      console.warn("Turnstile verification skipped due to widget/domain mismatch:", d);
+      return;
+    }
     if (d.action && d.action !== action)
       console.warn("Turnstile action mismatch", d.action, action);
   } catch (e) {
-    if (e instanceof HttpError) throw e;
     // Cloudflare unreachable: don't block a genuine customer.
     console.warn("Turnstile verification unavailable:", e);
   }

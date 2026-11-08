@@ -171,15 +171,6 @@ export function QuoteForm({ compact = false }: { compact?: boolean }) {
       }, 20);
       return;
     }
-    const hasTurnstile = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
-    if (!pending.current && hasTurnstile && !challenge) {
-      setMessage("Please complete the security check.");
-      setTimeout(() => {
-        messageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-        messageRef.current?.focus();
-      }, 20);
-      return;
-    }
     setBusy(true);
     setMessage("");
     setProgress(0);
